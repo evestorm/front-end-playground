@@ -75,6 +75,7 @@
       <div class="points-wrap"></div>
     </div>
   </div>
+	<script src="js/transform.js"></script>
   <script>
     window.onload = function () {
       document.addEventListener('touchstart', function (event) {
@@ -132,25 +133,23 @@
           let startX = 0
           //元素一开始的位置
           let elementX = 0
-          let translateX = 0
           carouselWrap.addEventListener("touchstart", function (event) {
             const TouchC = event.changedTouches[0]
 
             ulNode.style.transition = "none"
 
             startX = TouchC.clientX
-            elementX = translateX
+            elementX = damu.css(ulNode, 'translateX')
           })
           carouselWrap.addEventListener("touchmove", function (event) {
             const TouchC = event.changedTouches[0]
             const nowX = TouchC.clientX
             const disX = nowX - startX
-            translateX = elementX + disX
-            ulNode.style.transform = 'translateX(' + translateX + 'px)'
+            damu.css(ulNode, 'translateX', elementX + disX)
           })
           carouselWrap.addEventListener("touchend", function () {
             //index抽象了ul的实时位置
-            var index = translateX / document.documentElement.clientWidth
+            var index = damu.css(ulNode, 'translateX') / document.documentElement.clientWidth
             index = Math.round(index);
 
             //超出控制
@@ -166,9 +165,8 @@
             }
             pointsSpan[-index].classList.add("active")
 
-            ulNode.style.transition = ".5s left"
-            translateX = index * (document.documentElement.clientWidth)
-            ulNode.style.transform = 'translateX(' + translateX + 'px)'
+            ulNode.style.transition = ".5s transform"
+            damu.css(ulNode, 'translateX', index * (document.documentElement.clientWidth))
           })
         }
       }

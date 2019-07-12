@@ -1,4 +1,5 @@
 +(function(w){
+	// 使用命名空间来避免命名冲突
 	w.damu = {};
 	w.damu.css=function (node,type,val){
 			if(typeof node ==="object" && typeof node["transform"] ==="undefined" ){
