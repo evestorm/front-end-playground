@@ -19,14 +19,13 @@
     }
 
     .carousel-wrap>.list {
-      width: 500%;
-      overflow: hidden;
       list-style: none;
+      overflow: hidden;
+      position: absolute;
     }
 
     .carousel-wrap>.list>li {
       float: left;
-      width: 20%;
     }
 
     .carousel-wrap>.list>li>a,
@@ -42,15 +41,7 @@
 
 <body>
   <div id="wrap">
-    <div class="carousel-wrap">
-      <ul class="list">
-        <li><a href="javascript:;"><img src="img/01.jpg" alt=""></a></li>
-        <li><a href="javascript:;"><img src="img/02.jpg" alt=""></a></li>
-        <li><a href="javascript:;"><img src="img/03.jpg" alt=""></a></li>
-        <li><a href="javascript:;"><img src="img/04.jpg" alt=""></a></li>
-        <li><a href="javascript:;"><img src="img/05.jpg" alt=""></a></li>
-      </ul>
-    </div>
+    <div class="carousel-wrap"></div>
   </div>
   <script>
     window.onload = function () {
@@ -59,6 +50,32 @@
       }, {
         passive: false
       })
+
+      const arr = ['img/01.jpg', 'img/02.jpg', 'img/03.jpg', 'img/04.jpg', 'img/05.jpg']
+
+      function carousel(arr) {
+        const carouselWrap = document.querySelector('.carousel-wrap')
+        if (carouselWrap) {
+          const ulNode = document.createElement('ul')
+          const styleNode = document.createElement('style')
+          ulNode.className = 'list'
+          for (let i = 0; i < arr.length; i++) {
+            const img = arr[i];
+            ulNode.innerHTML += '<li><a href="javascript:;"><img src="' + img + '" alt=""></a></li>'
+          }
+          styleNode.innerHTML = '.carousel-wrap > .list > li { width: ' + (1 / arr.length * 100) +
+            '%; } .carousel-wrap > .list { width: ' + (arr.length) + '00% }'
+          carouselWrap.appendChild(ulNode)
+          document.head.appendChild(styleNode)
+
+          const imgNode = document.querySelector('.carousel-wrap>.list>li>a>img')
+          setTimeout(() => {
+            carouselWrap.style.height = imgNode.offsetHeight + 'px'
+          }, 300);
+        }
+      }
+      // 传入数组动态创建列表
+      carousel(arr)
     }
   </script>
 </body>
