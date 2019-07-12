@@ -71,11 +71,11 @@
 
 <body>
   <div id="wrap">
-    <div class="carousel-wrap" needCarousel>
+    <div class="carousel-wrap" needCarousel needAuto>
       <div class="points-wrap"></div>
     </div>
   </div>
-	<script src="js/transform.js"></script>
+  <script src="js/transform.js"></script>
   <script>
     window.onload = function () {
       document.addEventListener('touchstart', function (event) {
@@ -137,6 +137,7 @@
            * 4.将手指移动的距离加给元素
            * */
 
+          let index = 0
           //手指一开始的位置
           let startX = 0
           //元素一开始的位置
@@ -151,17 +152,20 @@
             点击第二组的最后一张时 瞬间跳到第一组的最后一张*/
             //index代表ul的位置
             if (needCarousel) {
-              let index = damu.css(ulNode,"translateX") / document.documentElement.clientWidth
+              let index = damu.css(ulNode, "translateX") / document.documentElement.clientWidth
               if (-index === 0) {
                 index = -pointslength
-              } else if (-index === (arr.length-1)) {
-                index = -(pointslength-1)
+              } else if (-index === (arr.length - 1)) {
+                index = -(pointslength - 1)
               }
-              damu.css(ulNode,"translateX",index*document.documentElement.clientWidth)
+              damu.css(ulNode, "translateX", index * document.documentElement.clientWidth)
             }
 
             startX = TouchC.clientX
             elementX = damu.css(ulNode, 'translateX')
+
+            //清楚定时器
+            clearInterval(timer)
           })
           carouselWrap.addEventListener("touchmove", function (event) {
             const TouchC = event.changedTouches[0]
@@ -171,7 +175,7 @@
           })
           carouselWrap.addEventListener("touchend", function () {
             //index抽象了ul的实时位置
-            let index = damu.css(ulNode, 'translateX') / document.documentElement.clientWidth
+            index = damu.css(ulNode, 'translateX') / document.documentElement.clientWidth
             index = Math.round(index);
 
             //超出控制
@@ -189,7 +193,45 @@
 
             ulNode.style.transition = ".5s transform"
             damu.css(ulNode, 'translateX', index * (document.documentElement.clientWidth))
+
+            //开启自动轮播
+            if (needAuto) {
+              auto()
+            }
           })
+
+          // 自动轮播
+          let timer = 0
+          let needAuto = carouselWrap.getAttribute("needAuto")
+          needAuto = needAuto == null ? false : true
+          if (needAuto) {
+            auto()
+          }
+
+          function auto() {
+            clearInterval(timer)
+            timer = setInterval(function () {
+              if (index === 1 - arr.length) {
+                ulNode.style.transition = "none"
+                index = 1 - arr.length / 2
+                damu.css(ulNode, "translateX", index * document.documentElement.clientWidth)
+              }
+              setTimeout(function () {
+                index--
+                ulNode.style.transition = "1s transform"
+                xiaoyuandian(index)
+                damu.css(ulNode, "translateX", index * document.documentElement.clientWidth)
+              }, 50)
+            }, 2000)
+          }
+
+          function xiaoyuandian(index) {
+            if (!pointsWrap) return
+            for (let i = 0; i < pointsSpan.length; i++) {
+              pointsSpan[i].classList.remove("active")
+            }
+            pointsSpan[-index % pointslength].classList.add("active")
+          }
         }
       }
     }
