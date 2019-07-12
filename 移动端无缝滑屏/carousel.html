@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>布局</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .carousel-wrap>.list {
+      width: 500%;
+      overflow: hidden;
+      list-style: none;
+    }
+
+    .carousel-wrap>.list>li {
+      float: left;
+      width: 20%;
+    }
+
+    .carousel-wrap>.list>li>a,
+    .carousel-wrap>.list>li>a>img {
+      display: block;
+    }
+
+    .carousel-wrap>.list>li>a>img {
+      width: 100%
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrap">
+    <div class="carousel-wrap">
+      <ul class="list">
+        <li><a href="javascript:;"><img src="img/01.jpg" alt=""></a></li>
+        <li><a href="javascript:;"><img src="img/02.jpg" alt=""></a></li>
+        <li><a href="javascript:;"><img src="img/03.jpg" alt=""></a></li>
+        <li><a href="javascript:;"><img src="img/04.jpg" alt=""></a></li>
+        <li><a href="javascript:;"><img src="img/05.jpg" alt=""></a></li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    window.onload = function () {
+      document.addEventListener('touchstart', function (event) {
+        event.preventDefault()
+      }, {
+        passive: false
+      })
+    }
+  </script>
+</body>
+
+</html>
