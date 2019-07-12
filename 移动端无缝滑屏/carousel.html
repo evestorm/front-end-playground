@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>布局</title>
   <style>
@@ -14,6 +14,11 @@
 
     html,
     body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #wrap {
       height: 100%;
       overflow: hidden;
     }
@@ -52,6 +57,8 @@
       })
 
       const arr = ['img/01.jpg', 'img/02.jpg', 'img/03.jpg', 'img/04.jpg', 'img/05.jpg']
+      // 传入数组动态创建列表
+      carousel(arr)
 
       function carousel(arr) {
         const carouselWrap = document.querySelector('.carousel-wrap')
@@ -71,11 +78,38 @@
           const imgNode = document.querySelector('.carousel-wrap>.list>li>a>img')
           setTimeout(() => {
             carouselWrap.style.height = imgNode.offsetHeight + 'px'
-          }, 300);
+          }, 100);
+
+          /*滑屏
+           * 1.拿到元素一开始的位置
+           * 2.拿到手指一开始点击的位置
+           * 3.拿到手指move的实时距离
+           * 4.将手指移动的距离加给元素
+           * */
+
+          //手指一开始的位置
+          let startX = 0
+          //元素一开始的位置
+          let elementX = 0
+          carouselWrap.addEventListener("touchstart", function (event) {
+            var TouchC = event.changedTouches[0]
+            startX = TouchC.clientX
+            elementX = ulNode.offsetLeft
+          })
+          carouselWrap.addEventListener("touchmove", function (event) {
+            var TouchC = event.changedTouches[0]
+            var nowX = TouchC.clientX
+            var disX = nowX - startX
+            ulNode.style.left = elementX + disX + "px"
+          })
+          carouselWrap.addEventListener("touchend", function () {
+            //index抽象了ul的实时位置
+            var index = ulNode.offsetLeft / document.documentElement.clientWidth;
+            index = Math.round(index);
+            ulNode.style.left = index * (document.documentElement.clientWidth) + "px";
+          })
         }
       }
-      // 传入数组动态创建列表
-      carousel(arr)
     }
   </script>
 </body>
