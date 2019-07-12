@@ -71,7 +71,7 @@
 
 <body>
   <div id="wrap">
-    <div class="carousel-wrap">
+    <div class="carousel-wrap" needCarousel>
       <div class="points-wrap"></div>
     </div>
   </div>
@@ -91,6 +91,14 @@
       function carousel(arr) {
         const carouselWrap = document.querySelector('.carousel-wrap')
         if (carouselWrap) {
+          const pointslength = arr.length
+          //无缝
+          let needCarousel = carouselWrap.getAttribute("needCarousel")
+          needCarousel = needCarousel == null ? false : true
+          if (needCarousel) {
+            arr = arr.concat(arr)
+          }
+
           const ulNode = document.createElement('ul')
           const styleNode = document.createElement('style')
           ulNode.className = 'list'
@@ -112,7 +120,7 @@
           let pointsWrap = document.querySelector(".carousel-wrap > .points-wrap"),
             pointsSpan
           if (pointsWrap) {
-            for (let i = 0; i < arr.length; i++) {
+            for (let i = 0; i < pointslength; i++) {
               if (i === 0) {
                 pointsWrap.innerHTML += '<span class="active"></span>'
               } else {
@@ -138,6 +146,20 @@
 
             ulNode.style.transition = "none"
 
+            // 无缝
+            /*点击第一组的第一张时 瞬间跳到第二组的第一张
+            点击第二组的最后一张时 瞬间跳到第一组的最后一张*/
+            //index代表ul的位置
+            if (needCarousel) {
+              let index = damu.css(ulNode,"translateX") / document.documentElement.clientWidth
+              if (-index === 0) {
+                index = -pointslength
+              } else if (-index === (arr.length-1)) {
+                index = -(pointslength-1)
+              }
+              damu.css(ulNode,"translateX",index*document.documentElement.clientWidth)
+            }
+
             startX = TouchC.clientX
             elementX = damu.css(ulNode, 'translateX')
           })
@@ -149,7 +171,7 @@
           })
           carouselWrap.addEventListener("touchend", function () {
             //index抽象了ul的实时位置
-            var index = damu.css(ulNode, 'translateX') / document.documentElement.clientWidth
+            let index = damu.css(ulNode, 'translateX') / document.documentElement.clientWidth
             index = Math.round(index);
 
             //超出控制
@@ -163,7 +185,7 @@
             for (let i = 0; i < pointsSpan.length; i++) {
               pointsSpan[i].classList.remove("active")
             }
-            pointsSpan[-index].classList.add("active")
+            pointsSpan[-index % pointslength].classList.add("active")
 
             ulNode.style.transition = ".5s transform"
             damu.css(ulNode, 'translateX', index * (document.documentElement.clientWidth))
