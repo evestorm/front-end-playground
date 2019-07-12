@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			
+			#test{
+				width: 100px;
+				height: 100px;
+				background: pink;
+				/*transform:scale(2) translateX(100px);*/
+			}
+		</style>
+	</head>
+	<body>
+		<div id="test">
+			
+		</div>
+	</body>
+	<script src="js/transform.js"></script>
+	<script type="text/javascript">
+		
+		
+		//css函数对transform的值进行读,写操作
+		//css(node,type)  读
+		//css(node,type,val)  写
+		//规避覆盖的风险
+		var test = document.querySelector("#test");
+		damu.css(test,"translateX",100);
+		damu.css(test,"translateX",200);
+		damu.css(test,"scale",2);
+		console.log(damu.css(test,"translateX"))
+		
+	</script>
+</html>

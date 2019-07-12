@@ -132,23 +132,25 @@
           let startX = 0
           //元素一开始的位置
           let elementX = 0
+          let translateX = 0
           carouselWrap.addEventListener("touchstart", function (event) {
-            var TouchC = event.changedTouches[0]
+            const TouchC = event.changedTouches[0]
 
             ulNode.style.transition = "none"
 
             startX = TouchC.clientX
-            elementX = ulNode.offsetLeft
+            elementX = translateX
           })
           carouselWrap.addEventListener("touchmove", function (event) {
-            var TouchC = event.changedTouches[0]
-            var nowX = TouchC.clientX
-            var disX = nowX - startX
-            ulNode.style.left = elementX + disX + "px"
+            const TouchC = event.changedTouches[0]
+            const nowX = TouchC.clientX
+            const disX = nowX - startX
+            translateX = elementX + disX
+            ulNode.style.transform = 'translateX(' + translateX + 'px)'
           })
           carouselWrap.addEventListener("touchend", function () {
             //index抽象了ul的实时位置
-            var index = ulNode.offsetLeft / document.documentElement.clientWidth;
+            var index = translateX / document.documentElement.clientWidth
             index = Math.round(index);
 
             //超出控制
@@ -165,7 +167,8 @@
             pointsSpan[-index].classList.add("active")
 
             ulNode.style.transition = ".5s left"
-            ulNode.style.left = index * (document.documentElement.clientWidth) + "px"
+            translateX = index * (document.documentElement.clientWidth)
+            ulNode.style.transform = 'translateX(' + translateX + 'px)'
           })
         }
       }
