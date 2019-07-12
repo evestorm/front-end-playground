@@ -23,6 +23,10 @@
       overflow: hidden;
     }
 
+    .carousel-wrap {
+      position: relative;
+    }
+
     .carousel-wrap>.list {
       list-style: none;
       overflow: hidden;
@@ -41,12 +45,35 @@
     .carousel-wrap>.list>li>a>img {
       width: 100%
     }
+
+    .carousel-wrap>.points-wrap {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .carousel-wrap>.points-wrap>span {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(60, 56, 56, 0.233);
+      margin-left: 5px;
+    }
+
+    .carousel-wrap>.points-wrap>span.active {
+      background: white;
+    }
   </style>
 </head>
 
 <body>
   <div id="wrap">
-    <div class="carousel-wrap"></div>
+    <div class="carousel-wrap">
+      <div class="points-wrap"></div>
+    </div>
   </div>
   <script>
     window.onload = function () {
@@ -80,6 +107,20 @@
             carouselWrap.style.height = imgNode.offsetHeight + 'px'
           }, 100);
 
+          // 小圆点
+          let pointsWrap = document.querySelector(".carousel-wrap > .points-wrap"),
+            pointsSpan
+          if (pointsWrap) {
+            for (let i = 0; i < arr.length; i++) {
+              if (i === 0) {
+                pointsWrap.innerHTML += '<span class="active"></span>'
+              } else {
+                pointsWrap.innerHTML += '<span></span>'
+              }
+            }
+            pointsSpan = document.querySelectorAll(".carousel-wrap>.points-wrap > span")
+          }
+
           /*滑屏
            * 1.拿到元素一开始的位置
            * 2.拿到手指一开始点击的位置
@@ -93,6 +134,9 @@
           let elementX = 0
           carouselWrap.addEventListener("touchstart", function (event) {
             var TouchC = event.changedTouches[0]
+
+            ulNode.style.transition = "none"
+
             startX = TouchC.clientX
             elementX = ulNode.offsetLeft
           })
@@ -106,7 +150,22 @@
             //index抽象了ul的实时位置
             var index = ulNode.offsetLeft / document.documentElement.clientWidth;
             index = Math.round(index);
-            ulNode.style.left = index * (document.documentElement.clientWidth) + "px";
+
+            //超出控制
+            if (index > 0) {
+              index = 0;
+            } else if (index < 1 - arr.length) {
+              index = 1 - arr.length
+            }
+
+            // 控制小圆点
+            for (let i = 0; i < pointsSpan.length; i++) {
+              pointsSpan[i].classList.remove("active")
+            }
+            pointsSpan[-index].classList.add("active")
+
+            ulNode.style.transition = ".5s left"
+            ulNode.style.left = index * (document.documentElement.clientWidth) + "px"
           })
         }
       }
