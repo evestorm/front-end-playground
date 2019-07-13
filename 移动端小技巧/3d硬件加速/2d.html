@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			
+			html,body{height: 100%;overflow: hidden;}
+			#wrap{height: 100%;overflow: hidden;}
+			.carousel-wrap{position: relative;}
+			.carousel-wrap > .list{list-style: none;overflow: hidden;position: absolute;}
+			.carousel-wrap > .list > li{float: left;}
+			.carousel-wrap > .list > li > a,
+			.carousel-wrap > .list > li > a >img{display: block;}
+			.carousel-wrap > .list > li > a >img{width: 100%;}
+			.carousel-wrap > .points-wrap{position: absolute;bottom: 0;width: 100%;text-align: center;z-index: 1;}
+			.carousel-wrap > .points-wrap > span{display: inline-block;width: 10px;height: 10px;border-radius: 50%;
+									background: green;margin-left:5px;}
+			.carousel-wrap > .points-wrap > span.active{background: deeppink;}
+			
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="carousel-wrap" needAuto >
+				<div class="points-wrap"></div>
+			</div>
+		</div>
+	</body>
+	<script src="js/damu.js"></script>
+	<script type="text/javascript">
+		window.onload=function(){
+			document.addEventListener("touchstart",function(ev){
+				ev=ev||event;
+				ev.preventDefault();
+			});
+			
+			var arr=["img/01.jpg","img/02.jpg","img/03.jpg","img/04.jpg","img/05.jpg"]
+			damu.carousel(arr);
+		}
+	</script>
+</html>
