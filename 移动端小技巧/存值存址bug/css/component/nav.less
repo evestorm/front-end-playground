@@ -1,0 +1,38 @@
+@rem:1080/16rem;
+@import "../mixin/1-px";
+.damu-nav-drag-wrapper{
+    .1-px(bottom);
+    width: 100%;
+    height: 177/@rem;
+    box-sizing: border-box;
+    background: #EEEEEE;
+    padding: 31/@rem 0 14/@rem 0;
+    .list{
+        font-size: 0;
+        white-space: nowrap;
+        //ul可以被li撑开宽度
+        float: left; 
+        & > li{
+            height: 129/@rem;
+            line-height: 129/@rem;
+            font-size: 1rem;
+            display: inline-block;
+            a{
+                display: block;
+                height: 100%;
+                color: #020202;
+                padding: 0 38/@rem;
+                &.active{
+                    background: #690;
+                    color: #fff;
+                }
+            }
+//          &.active{
+//              background: #690;
+//              a{
+//                  color: #fff;
+//              }
+//          }
+        }
+    }
+}
