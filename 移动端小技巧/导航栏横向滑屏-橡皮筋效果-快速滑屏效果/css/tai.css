@@ -137,6 +137,7 @@ img {
 #wrap .head .mask {
   position: relative;
   position: absolute;
+  z-index: 2;
   left: 0;
   top: 2rem;
   width: 100%;

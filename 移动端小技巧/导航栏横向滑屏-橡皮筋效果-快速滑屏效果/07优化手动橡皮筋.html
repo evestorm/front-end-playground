@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1.0,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" />
+	<title></title>
+	<link rel="stylesheet" href="css/tai.css" />
+</head>
+
+<body>
+	<div id="wrap">
+		<div class="head">
+			<div class="head-top">
+				<!--logo-->
+				<h1 class="logo">
+					<a href="http://www.atguigu.com">
+						<img src="img/logo.png" />
+					</a>
+				</h1>
+				<!--面包屑导航-->
+				<a href="javascript:;" class="menuBtn"></a>
+				<!--按钮排-->
+				<div class="btns">
+					<a href="javascript:;" class="search">搜索</a>
+					<a href="javascript:;">登录</a>
+					<a href="javascript:;">注册</a>
+				</div>
+			</div>
+			<div class="head-bottom">
+				<form method="post">
+					<input type="text" placeholder="请碰我一下" />
+					<input type="submit" value="搜索" />
+				</form>
+			</div>
+			<ul class="mask">
+				<li>
+					<a href="javascript:;">首页</a>
+				</li>
+				<li>
+					<a href="javascript:;">MV</a>
+				</li>
+				<li>
+					<a href="javascript:;">悦单</a>
+				</li>
+				<li>
+					<a href="javascript:;">V榜</a>
+				</li>
+				<li>
+					<a href="javascript:;">音乐</a>
+				</li>
+				<li>
+					<a href="javascript:;">商城</a>
+				</li>
+				<li>
+					<a href="javascript:;">节目</a>
+				</li>
+				<li>
+					<a href="javascript:;">饭团</a>
+				</li>
+				<li>
+					<a href="javascript:;">咨询</a>
+				</li>
+				<li>
+					<a href="javascript:;">我的家</a>
+				</li>
+				<li>
+					<a href="javascript:;">APP下载</a>
+				</li>
+				<li>
+					<a href="javascript:;">热门应用</a>
+				</li>
+			</ul>
+		</div>
+		<div class="content">
+			<div class="nav">
+				<ul class="list">
+					<li class="active">
+						<a href="javascript:;">首页</a>
+					</li>
+					<li>
+						<a href="javascript:;">MV</a>
+					</li>
+					<li>
+						<a href="javascript:;">悦单</a>
+					</li>
+					<li>
+						<a href="javascript:;">V榜</a>
+					</li>
+					<li>
+						<a href="javascript:;">音乐</a>
+					</li>
+					<li>
+						<a href="javascript:;">商城</a>
+					</li>
+					<li>
+						<a href="javascript:;">节目</a>
+					</li>
+					<li>
+						<a href="javascript:;">饭团</a>
+					</li>
+					<li>
+						<a href="javascript:;">咨询</a>
+					</li>
+					<li>
+						<a href="javascript:;">我的家</a>
+					</li>
+					<li>
+						<a href="javascript:;">APP下载</a>
+					</li>
+					<li>
+						<a href="javascript:;">热门应用</a>
+					</li>
+					<li>
+						<a href="javascript:;">晓飞张</a>
+					</li>
+					<li>
+						<a href="javascript:;">金龙油</a>
+					</li>
+					<li>
+						<a href="javascript:;">邱海峰</a>
+					</li>
+					<li>
+						<a href="javascript:;">小贱贱</a>
+					</li>
+					<li>
+						<a href="javascript:;">你</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="js/tools.js"></script>
+<script src="js/damu.js"></script>
+<script type="text/javascript">
+	window.onload = function () {
+		document.addEventListener("touchstart", function (ev) {
+			ev = ev || event;
+			ev.preventDefault();
+		}, {
+			passive: false
+		})
+
+		;
+		(function () {
+			var styleNode = document.createElement("style");
+			var w = document.documentElement.clientWidth / 16;
+			styleNode.innerHTML = "html{font-size:" + w + "px!important}";
+			document.head.appendChild(styleNode);
+		})()
+
+
+		drag();
+
+		function drag() {
+			//滑屏区域
+			var wrap = document.querySelector("#wrap .content .nav");
+			//滑屏元素
+			var item = document.querySelector("#wrap .content .nav .list");
+
+			//元素一开始的位置  手指一开始的位置
+			var startX = 0;
+			var elementX = 0;
+			var minX = wrap.clientWidth - item.offsetWidth;
+			//快速滑屏的必要参数
+			var lastTime = 0;
+			var lastPoint = 0;
+			var timeDis = 1;
+			var pointDis = 0;
+			wrap.addEventListener("touchstart", function (ev) {
+				ev = ev || event;
+				var touchC = ev.changedTouches[0];
+
+				startX = touchC.clientX;
+				elementX = damu.css(item, "translateX");
+
+				item.style.transition = "none";
+
+				lastTime = new Date().getTime();
+				lastPoint = touchC.clientX;
+				//lastPoint = damu.css(item,"translateX");
+
+				//清除速度的残留
+				pointDis = 0;
+			})
+
+			wrap.addEventListener("touchmove", function (ev) {
+				ev = ev || event;
+				var touchC = ev.changedTouches[0];
+				var nowX = touchC.clientX;
+				var disX = nowX - startX;
+				var translateX = elementX + disX;
+
+
+				var nowTime = new Date().getTime();
+				var nowPoint = touchC.clientX;
+				timeDis = nowTime - lastTime;
+				pointDis = nowPoint - lastPoint;
+
+				lastTime = nowTime;
+				lastPoint = nowPoint;
+
+				/*手动橡皮筋效果
+				 * 
+				 * 在move的过程中，每一次手指touchmove真正的有效距离慢慢变小，元素的滑动距离还是在变大
+				 * 
+				 * pointDis：整个手指touchmove真正的有效距
+				 * 
+				 * translateX = damu.css(item,"translateX") + pointDis*scale;!!!
+				 * 
+				 * */
+				if (translateX > 0) {
+					var scale = document.documentElement.clientWidth / ((document.documentElement.clientWidth + translateX) *
+						1.5);
+					translateX = damu.css(item, "translateX") + pointDis * scale;
+				} else if (translateX < minX) {
+					var over = minX - translateX;
+					var scale = document.documentElement.clientWidth / ((document.documentElement.clientWidth + over) * 1.5);
+					translateX = damu.css(item, "translateX") + pointDis * scale;
+				}
+				damu.css(item, "translateX", translateX);
+			})
+
+			wrap.addEventListener("touchend", function (ev) {
+				var translateX = damu.css(item, "translateX");
+				//速度越大  位移越远
+				var speed = pointDis / timeDis;
+				speed = Math.abs(speed) < 0.5 ? 0 : speed;
+				var targetX = translateX + speed * 200;
+				var time = Math.abs(speed) * 0.2;
+				time = time < 0.8 ? 0.8 : time;
+				time = time > 2 ? 2 : time;
+				//快速滑屏的橡皮筋效果
+				var bsr = "";
+				if (targetX > 0) {
+					targetX = 0;
+					bsr = "cubic-bezier(.26,1.51,.68,1.54) "
+					//translateX=0;
+					//damu.css(item,"translateX",translateX);
+				} else if (targetX < minX) {
+					targetX = minX;
+					bsr = "cubic-bezier(.26,1.51,.68,1.54) "
+					//translateX = minX;
+					//damu.css(item,"translateX",translateX);
+				}
+
+				item.style.transition = time + "s " + bsr + " transform";
+				damu.css(item, "translateX", targetX);
+			})
+		}
+
+
+
+
+
+
+		changeFocus()
+
+		function changeFocus() {
+			var inputText = document.querySelector("#wrap .head .head-bottom form input[type='text']");
+			inputText.addEventListener("touchstart", function (ev) {
+				ev = ev || event;
+				this.focus();
+				ev.stopPropagation();
+				ev.preventDefault();
+			})
+			document.addEventListener("touchstart", function () {
+				inputText.blur();
+			})
+		}
+
+
+
+		CMCFMenuBtn();
+
+		function CMCFMenuBtn() {
+			var menuBtn = document.querySelector("#wrap .head .head-top .menuBtn");
+			var mask = document.querySelector("#wrap .head .mask");
+			//isXX:false  频道按钮
+			//isXX:ture	  XX按钮
+			var isXX = false;
+			menuBtn.addEventListener("touchstart", function (ev) {
+				ev = ev || event;
+				var touchC = ev.changedTouches[0];
+				if (!isXX) {
+					tools.addClass(menuBtn, "active");
+					mask.style.display = "block";
+				} else {
+					tools.removeClass(menuBtn, "active");
+					mask.style.display = "none";
+				}
+				isXX = !isXX;
+				ev.stopPropagation();
+				ev.preventDefault();
+			})
+
+			document.addEventListener("touchstart", function () {
+				if (isXX) {
+					tools.removeClass(menuBtn, "active");
+					mask.style.display = "none";
+					isXX = !isXX;
+				}
+			})
+
+			mask.addEventListener("touchstart", function (ev) {
+				ev = ev || event;
+				ev.stopPropagation();
+				ev.preventDefault();
+			})
+		}
+	}
+</script>
+
+</html>
