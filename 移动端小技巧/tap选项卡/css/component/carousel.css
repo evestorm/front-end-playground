@@ -1,0 +1,36 @@
+.carousel-wrap {
+  position: relative;
+}
+.carousel-wrap > .list {
+  list-style: none;
+  overflow: hidden;
+  position: absolute;
+}
+.carousel-wrap > .list > li {
+  float: left;
+}
+.carousel-wrap > .list > li > a {
+  display: block;
+}
+.carousel-wrap > .list > li > a > img {
+  display: block;
+  width: 100%;
+}
+.carousel-wrap > .points-wrap {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+}
+.carousel-wrap > .points-wrap > span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: green;
+  margin-left: 5px;
+}
+.carousel-wrap > .points-wrap > span.active {
+  background: deeppink;
+}

@@ -1,0 +1,48 @@
+.damu-nav-drag-wrapper {
+  position: relative;
+  width: 100%;
+  height: 2.62222222rem;
+  box-sizing: border-box;
+  background: #EEEEEE;
+  padding: 0.45925926rem 0 0.20740741rem 0;
+}
+.damu-nav-drag-wrapper:before {
+  position: absolute;
+  content: "";
+  display: block;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: #000000;
+}
+@media (-webkit-device-pixel-ratio: 2) {
+  .damu-nav-drag-wrapper:before {
+    transform: scaleY(0.5);
+  }
+}
+@media (-webkit-device-pixel-ratio: 3) {
+  .damu-nav-drag-wrapper:before {
+    transform: scaleY(0.33333333);
+  }
+}
+.damu-nav-drag-wrapper .list {
+  font-size: 0;
+  white-space: nowrap;
+  float: left;
+}
+.damu-nav-drag-wrapper .list > li {
+  height: 1.91111111rem;
+  line-height: 1.91111111rem;
+  font-size: 1rem;
+  display: inline-block;
+}
+.damu-nav-drag-wrapper .list > li a {
+  display: block;
+  height: 100%;
+  color: #020202;
+  padding: 0 0.56296296rem;
+}
+.damu-nav-drag-wrapper .list > li a.active {
+  background: #690;
+  color: #fff;
+}
