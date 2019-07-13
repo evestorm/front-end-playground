@@ -1,0 +1,141 @@
+//css reset
+html,body,ul,li,h1,h2,h3,h4,span,div,p,a,form,input{margin: 0;padding: 0;font-family: helvetica;}
+html,body{height: 100%;overflow: hidden;}
+ul{list-style: none;}
+a{text-decoration: none;display: block}
+a,input,button{-webkit-tap-highlight-color: rgba(0,0,0,0);
+                -webkit-appearance: none;outline: none;border: none;}
+img{display: block}
+
+
+//1rem值伪多少位图像素
+@rem:1080/16rem;
+@import "mixin/1-px";
+@import "component/carousel";
+@import "component/nav";
+ #wrap{
+        position: relative;
+        font-size: 16/@rem;
+        height: 100%;
+        overflow: hidden;
+        background: #EEEEEE;
+        .head{
+            position: absolute;
+            width: 100%;
+            height: 100px;
+            background: #232323;
+            height: 270/@rem;
+            .head-top{
+                height:135/@rem;
+                .logo {
+                    float: left;
+                    padding: 26/@rem 17/@rem 21/@rem 17/@rem;
+                    img{
+                        width:240/@rem;
+                    }
+                }
+                .menuBtn{
+                    float: left;
+                    width: 129/@rem;
+                    height: 135/@rem;
+                    background: url(../img/menuBtn.png) no-repeat;
+                    background-size:82/@rem 233/@rem ;
+                    background-position: center 16/@rem;
+                    &.active{
+                        background-position: center -120/@rem;
+                    }
+                }
+                .btns{
+                    padding-top:21/@rem ;
+                    float: right;
+                    a{
+                        float: left;
+                        width: 111/@rem;
+                        height: 78/@rem;
+                        line-height: 78/@rem;
+                        background: #690;
+                        color: #ccc;
+                        margin-right:15/@rem;
+                        font-size: 42/@rem;
+                        text-align: center;
+                        border-radius:8/@rem ;
+                        &.search{
+                            width: 130/@rem;
+                            height: 88/@rem;
+                            line-height: 88/@rem;
+                            color: #fff;
+                            margin-right: 30/@rem;
+                            margin-top: 3/@rem;
+                            font-weight: bold;
+                            border-radius: 10/@rem;
+                        }
+                    }
+                    
+                }
+            }
+            .head-bottom{
+                height: 103/@rem;
+                padding: 16/@rem;
+                form{
+                    height: 100%;
+                    input[type='text']{
+                        float: left;
+                        box-sizing: border-box;
+                        height: 103/@rem;
+                        width: 829/@rem;
+                        background: #999999;
+                        padding: 5/@rem 10/@rem;
+                        border: 1px solid #5a5a5a;
+                        font-size: 41/@rem;
+                        color: #333333;
+                        border-radius: 15/@rem 0 0 15/@rem;
+                        &::-webkit-input-placeholder{
+                            color: #333333;
+                        }
+                        &:focus{
+                            background: white;
+                        }
+                    }
+                    input[type='submit']{
+                        float: right;
+                        width: 203/@rem;
+                        height: 103/@rem;
+                        background: #414040;
+                        color: #fff;
+                        font-size: 41/@rem;
+                        border-radius:0 15/@rem 15/@rem 0 ;
+                    }
+                }
+            }
+            .mask{
+                .1-px(top,deeppink);
+                position: absolute;
+                z-index: 2;
+                left: 0;
+                top: 135/@rem;
+                width: 100%;
+                padding: 10/@rem 0;
+                background: rgba(0, 0, 0, .8);
+                display: none;
+                & > li{
+                    width: 22.5%;
+                    height: 135/@rem;
+                    font-size: 54/@rem;
+                    line-height: 135/@rem;
+                    text-align: center; 
+                    float: left;   
+                    a{
+                        color: white;
+                    }          
+                }
+            }
+        }
+        .content{
+            background: pink;
+            position: absolute;
+            top: 270/@rem;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    }
