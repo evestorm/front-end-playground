@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			html,body{
+				height: 100%;
+				overflow: hidden;
+			}
+			#wrap{
+				position: relative;
+				height: 100%;
+				overflow: hidden;
+				background: pink;
+			}
+			#wrap .scrollBar{
+				position: absolute;
+				right: 0;
+				top: 0;
+				background: deeppink;
+				width: 4px;
+				height: 100%;
+				opacity: 0;
+				transition:1s ;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="content">
+				
+			</div>
+			<div class="scrollBar"></div>
+		</div>
+	</body>
+	<script src="js/damu.js"></script>
+	<script type="text/javascript">
+		window.onload=function(){
+			document.addEventListener("touchstart",function(ev){
+				ev=ev||event;
+				ev.preventDefault();
+			})
+			
+			var wrap = document.querySelector("#wrap");
+			var content = document.querySelector("#wrap .content");
+			for(var i=0;i<100;i++){
+				content.innerHTML+=i+"zdy</br>";
+			}
+			
+			
+			
+			//外部的业务逻辑
+			/*
+			 * start的逻辑在竖向滑屏一开始时触发
+			 * move的逻辑在竖向滑屏滑动中持续触发
+			 * end的逻辑在竖向滑屏结束时触发
+			 * */
+			var bar = document.querySelector("#wrap .scrollBar");
+			var content = document.querySelector("#wrap .content");
+			/*bar / 视口 = 视口 / 内容 */
+			bar.style.height =document.documentElement.clientHeight* (document.documentElement.clientHeight/content.offsetHeight)+"px";
+			var callBack ={
+				start:function(){
+					bar.style.opacity=1;
+				},
+				move:function(){
+					/*滚动条滚动的实时距离/滚动条能滚动的最远距离   =  内容滚动的实时距离/内容能滚动的最远距离*/
+					var scale = damu.css(this,"translateY") / (content.offsetHeight - document.documentElement.clientHeight)
+					damu.css(bar,"translateY",-scale*(document.documentElement.clientHeight - bar.offsetHeight));
+				},
+				end:function(){
+					bar.style.opacity=0;
+				}
+			}
+			
+			damu.vMove(wrap,callBack);
+		}
+		
+		
+	</script>
+</html>
