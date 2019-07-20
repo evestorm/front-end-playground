@@ -20,7 +20,7 @@
 
 		#wrap {
 			height: 100%;
-			overflow: hidden;
+			overflow-y: scroll;
 		}
 
 		#wrap .head {
@@ -41,12 +41,12 @@
 </body>
 <script type="text/javascript">
 	window.onload = function () {
-		document.addEventListener("touchstart", function (ev) {
-			ev = ev || event;
-			ev.preventDefault();
-		}, {
-			passive: false
-		})
+		// document.addEventListener("touchstart", function (ev) {
+		// 	ev = ev || event;
+		// 	ev.preventDefault();
+		// }, {
+		// 	passive: false
+		// })
 
 		;
 		(function () {
