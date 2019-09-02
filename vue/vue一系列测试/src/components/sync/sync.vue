@@ -2,7 +2,7 @@
   <div>
     <h1>sync修饰符————>对一个 prop 进行“双向绑定”</h1>
     <pre>
-      父组件：<子组件 :子prop值.sync='父data值'/>
+      父组件：<sub-component :子prop值.sync='父data值'/>
     </pre>
     <div class="details">
       <!-- <子组件 :子prop值.sync='父data值'/> -->
