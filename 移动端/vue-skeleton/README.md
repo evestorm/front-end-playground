@@ -6,7 +6,7 @@
 骨架屏和loading相比较还是骨架屏用户体验感更好。
 原理其实非常简单，就是在页面还没加载完成时展示一张图片（一般是Base64编码），类似下方效果：
 
-![骨架屏效果](./images/skeleton-demo.jpeg`)
+![骨架屏效果](./images/skeleton-demo.jpeg)
 
 ## 安装骨架屏插件
 
