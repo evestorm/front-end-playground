@@ -52,6 +52,14 @@ PWA的中文名叫做渐进式网页应用。它能将 `Web` 和 `App` 各自的
 
 `Service worker`实际上是一段脚本，在后台运行。作为一个独立的线程，运行环境与普通脚本不同，所以不能直接参与 Web 交互行为。`Service Worker`的出现是正是为了使得 `Web App`也可以做到像 `Native App`那样可以离线使用、消息推送的功能。
 
+#### 特点
+
+- 不能访问／操作dom
+- 会自动休眠，不会随浏览器关闭所失效(必须手动卸载)
+- 离线缓存内容开发者可控
+- 必须在https或者localhost下使用
+- 所有的api都基于promise
+
 #### 注册一个 service worker
 
 > index.html
@@ -60,7 +68,7 @@ PWA的中文名叫做渐进式网页应用。它能将 `Web` 和 `App` 各自的
 window.addEventListener('load',function(){
   // 页面加载完成后 注册serviceWorker
   if('serviceWorker' in navigator){
-      navigator.serviceWorker.register('./sw.js').then(reg=>{
+      navigator.serviceWorker.register('./sw.js').then(reg=>{ // reg:返回已注册好的对象
           console.log(reg.scope);
       });
       navigator.serviceWorker.addEventListener('controllerchange',()=>{
