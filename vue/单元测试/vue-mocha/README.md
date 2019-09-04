@@ -4,10 +4,8 @@
 
 ```shell
 vue create vue-mocha
-选择 babel / vue-router / vuex / unit test
+选择 babel / vue-router / vuex / mocha + chai 测试框架
 ```
-
-测试选择 mocha + chai
 
 创建完毕后来到 `package.json` 文件，script 脚本中的第三个：`"test:unit": "vue-cli-service test:unit"` 就是跑测试脚本的命令。
 
