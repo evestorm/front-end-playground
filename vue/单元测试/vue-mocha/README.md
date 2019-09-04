@@ -74,7 +74,7 @@ console.log(stringify({
 1. 通常自测后就会删除，测试代码无法保留；即使保留（注释掉），还会混在源码中增大文件体积
 2. 一旦测试代码过多，就不便于分类。再次测试时只会打印出结果，难以发现打印内容是针对谁的测试。
 
-所以最好以单元测试的方式，给某个文件单独写一个测试用例，专门测试该文件中的代码。例如针对上面的 `parser.js` 文件，我们可以在 `tests/unit` 下新建一个 `parser.spec.js` 文件，专门用来测试它：
+所以最好以单元测试的方式，给某个文件单独写一个测试用例，专门测试该文件中的代码。例如针对上面的 `parser.js` 文件，我们可以在 `tests/unit` 下新建一个 `Parser.spec.js` 文件，专门用来测试它：
 
 ```js
 import { parser, stringify } from '@/code/parser.js'
@@ -106,7 +106,7 @@ describe('stringify 方法', () => {
 
 ## 测试常用关系
 
-在 `tests/unit` 新建 `common.spec.js` 文件：
+在 `tests/unit` 新建 `Common.spec.js` 文件：
 
 ```js
 import { expect } from 'chai'
@@ -219,7 +219,7 @@ describe('Hello World 组件（使用vue提供的库测试）', () => {
 
 我们希望测试按钮每点击一次，count是否+1。
 
-在 `tests/unit` 下新建一个 `counter.spec.js` 文件，编写如下代码进行测试：
+在 `tests/unit` 下新建一个 `Counter.spec.js` 文件，编写如下代码进行测试：
 
 ```js
 import { expect } from 'chai'
@@ -237,5 +237,241 @@ describe('测试counter组件', () => {
     expect(wrapper.find('#count').text())
       .to.be.equal('11')
   });
+});
+```
+
+## 测试父子组件
+
+### 测试父组件
+
+现在模拟一个需求，目前父组件有一个子组件 Child 以及一个 #content 标签，#content 标签默认不显示，它的显示与否用 isShow 来控制。
+
+我们现在要测试的是，点击子组件 Child 中的按钮，能否触发父组件的 #content 标签显示。两组件如下：
+
+> src/components/Parent.vue
+
+```html
+<template>
+  <div>
+    <Child @show="show"></Child>
+    <div id="content" v-if="isShow">内容</div>
+  </div>
+</template>
+
+<script>
+  import Child from './Child'
+  export default {
+    data() {
+      return {
+        isShow: false
+      }
+    },
+    components: {
+      Child,
+    },
+    methods: {
+      show() {
+        this.isShow = true
+      }
+    },
+  }
+</script>
+```
+
+> src/components/Child.vue
+
+```html
+<template>
+  <div>
+    <button>点我显示父组件内容</button>
+  </div>
+</template>
+
+<script>
+  export default {
+  }
+</script>
+```
+
+接下来我们在 `tests/unit` 下新建一个 `Parent.spec.js` 文件来测试下此功能：
+
+```js
+import { expect } from 'chai'
+import { shallowMount } from '@vue/test-utils'
+import Parent from '@/components/Parent'
+import Child from '@/components/Child'
+
+describe('当前子组件触发事件时，可以控制父组件', () => {
+  it('$emit show', () => {
+    // 下方调用mount后拿到的包裹器的组件内容
+    // 会显示子组件内容，然而我们测试针对的对象是父组件，
+    // 并不需要子组件被渲染，为了防止这种情况（因为实际情况中组件嵌套可能很深，要是都渲染会影响效率）
+    // 所以改用 shallowMount 替换 mount，这样就不会渲染当前组件中的子组件了
+    // let wrapper = mount(Parent)
+    let wrapper = shallowMount(Parent)
+    // 先判断初始状态下 #content 元素是否存在
+    expect(wrapper.find('#content').exists()).to.be.false
+    // 触发子组件的 $emit
+    wrapper.find(Child).vm.$emit('show')
+    // 再次查看父组件的 #content 是否存在
+    expect(wrapper.find('#content').exists()).to.be.true
+  });
+});
+```
+
+### 测试子组件
+
+有时候我们还会在项目中，通过父组件给子组件传递一个函数调用。然后检测此函数在子组件中是否能被正常调用。
+
+首先给 `src/components/Child.vue` 组件添加一个prop接收函数，然后在组件内部添加一个按钮来触发函数的调用：
+
+```html
+<template>
+  <div>
+    <button>点我显示父组件内容</button>
+    <button id="fn" @click="clickMe">点我调用父组件传来的方法</button>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: {
+      fn: {}
+    },
+    methods: {
+      clickMe() {
+        this.fn()
+      }
+    }
+  }
+</script>
+```
+
+回到 `tests/unit/Parent.spec.js` 中编写测试。在编写之前还要引入一个插件 `sinon` ，它能帮助我们监听函数的调用情况：
+
+```shell
+npm install sinon
+```
+
+```js
+...
+import sinon from 'sinon'
+
+...
+
+// mocha + chai + sinon（帮助我们mock方法）
+describe('测试子组件接收一个函数，点击按钮时调用这个函数', () => {
+  it('点击按钮触发函数', () => {
+    let callback = sinon.spy() // 间谍函数
+    let wrapper = shallowMount(Child, {
+      // 把间谍函数传给子组件，它在记录自己被调用的次数
+      propsData: { fn: callback }
+    })
+    wrapper.find('#fn').trigger('click')
+    // 看调用次数callCount为几，触发一次click就是1，触发两次就是2，以此类推
+    expect(callback.callCount).to.be.equal(1)
+  });
+});
+```
+
+当然，sinon还能模拟函数传参的场景。首先来更改 `src/components/Child.vue` 组件的 clickMe 方法：
+
+```js
+clickMe() {
+  // this.fn()
+  this.fn('bilibili')
+  this.fn('dilidili')
+}
+```
+
+然后对 `tests/unit/Parent.spec.js` 进行改造，模拟函数被调用两次，且一二次分别传入不同参数的场景：
+
+```js
+wrapper.find('#fn').trigger('click')
+// 检测函数被调用第一次时，传入的第一个参数是否为「bilibili」
+expect(callback.getCall(0).args[0]).to.be.equal('bilibili')
+// 检测函数被调用第二次时，传入的第一个参数是否为「dilidili」
+expect(callback.getCall(1).args[0]).to.be.equal('dilidili')
+// 看调用次数callCount为几，触发一次click就是1，触发两次就是2，以此类推
+expect(callback.callCount).to.be.equal(2)
+```
+
+## 模拟异步请求
+
+平常开发用的挺多的还有异步请求，在 `macha + chai` 这套测试方案中，异步测试还缺少一个插件 `moxios` ，可以看做是 mocha + axios 的结合体，专门用来模拟异步测试。
+
+下面来模拟一个异步请求在组件中展示数据的场景。
+
+我们在 `src/components` 下新建 `GetData.vue` 组件：
+
+```html
+<template>
+  <div>
+    {{user}}
+  </div>
+</template>
+
+<script>
+  import axios from 'axios'
+  export default {
+    data() {
+      return {
+        user: 'lance'
+      }
+    },
+    mounted() {
+      axios.get('/user', res => {
+        this.user = res.data.user
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+  }
+</script>
+```
+
+在 `tests/unit/` 下新建 `GetData.spec.js` 用于异步测试。首先安装 `moxios` ：
+
+```shell
+npm install moxios
+```
+
+然后编写异步测试代码：
+
+```js
+import { expect } from 'chai'
+import { shallowMount } from '@vue/test-utils'
+import GetData from '@/components/GetData'
+
+import moxios from 'moxios'
+
+// mocha + axios = moxios 插件来获取异步
+describe('测试异步获取数据', () => {
+  // 在当前describe测试用例断言运行之前执行
+  beforeEach(function() {
+    // 装载 moxios
+    moxios.install()
+  })
+  // 在当前describe测试用例断言运行之后执行
+  afterEach(function() {
+    // 卸载 moxios
+    moxios.uninstall()
+  })
+
+  it('测试数据获取', (done) => {
+    let wrapper = shallowMount(GetData)
+    // 模拟对应请求返回的结果
+    moxios.stubRequest('/user', {
+      status: 200,
+      response: { user: 'lance' }
+    })
+    // 数据返回后测试组件中是否包含异步请求获取到的数据
+    moxios.wait(() => {
+      expect(wrapper.text()).to.be.match(/lance/)
+      // 调用一次 done 告知测试用例本次异步请求测试以完成
+      done()
+    })
+  });
+
 });
 ```
