@@ -1,12 +1,250 @@
 # 动态路由 + 路由鉴权
 
-## 介绍
+## 路由鉴权介绍
 
-在后台管理系统的开发中，往往不同种类的用户有不同的权限。例如 admin 用户是超管，可以访问并修改所有内容，而类似 employee 员工级别的用户，就只能访问管理系统中的部分内容，其他的一些高级功能（添加新用户，修改核心数据）则直接从导航或菜单选项中移除掉了。
+一般Vue的权限控制有两种方案：
 
-所以我们的应用场景便诞生了：需要有一种方式，能根据当前用户的级别，动态生成菜单栏和路由。防止低级别用户访问或操作系统核心数据。
+- 路由元信息(meta)
+- 动态加载菜单和路由(addRoutes)
 
-今天想要分享的内容就是如何在 Vue 项目中实现这种动态路由+路由鉴权的功能。
+### 路由元信息(meta)
+
+如果一个网站有不同的角色，比如**管理员**和**普通用户**，要求不同的角色能访问的页面是不一样的
+
+这个时候我们就可以**把所有的页面都放在路由表里**，只要**在访问的时候判断一下角色权限**。如果有权限就让访问，没有权限的话就拒绝访问，跳转到404页面。
+
+`vue-router` 在构建路由时提供了元信息 `meta` 配置接口，我们可以在元信息中添加路由对应的权限，然后在路由守卫中检查相关权限，控制其路由跳转。
+
+可以在每一个路由的 `meta` 属性里，将能访问该路由的角色添加到 `roles` 里。用户每次登陆后，将用户的角色返回。然后在访问页面时，把路由的 `meta` 属性和用户的角色进行对比，如果用户的角色在路由的 `roles` 里，那就是能访问，如果不在就拒绝访问。
+
+**代码示例1：**
+
+路由信息：
+
+```js
+routes: [
+    {
+        path: '/login',
+        name: 'login',
+        meta: {
+            roles: ['admin', 'user']
+        },
+        component: () => import('../components/Login.vue')
+    },
+    {
+        path: 'home',
+        name: 'home',
+        meta: {
+            roles: ['admin']
+        },
+        component: () => import('../views/Home.vue')
+    },
+]
+```
+
+页面控制：
+
+```js
+//假设有两种角色：admin 和 user  
+//从后台获取的用户角色
+const role = 'user'
+//当进入一个页面是会触发导航守卫 router.beforeEach 事件
+router.beforeEach((to,from,next)=>{
+	if(to.meta.roles.includes(role)){
+		next()	//放行
+	}esle{
+		next({path:"/404"})	//跳到404页面
+	}
+})
+```
+
+**代码示例2**
+
+当然也可以用下面的一种方法：
+
+```js
+// router.js
+// 路由表元信息
+[
+  {
+    path: '',
+    redirect: '/home'
+  },
+  {
+    path: '/home',
+    meta: {
+      title: 'Home',
+      icon: 'home'
+    }
+  },
+  {
+    path: '/userCenter',
+    meta: {
+      title: '个人中心',
+      requireAuth: true // 在需要登录的路由的meta中添加响应的权限标识
+    }
+  }
+]
+
+// 在守卫中访问元信息
+function gaurd (to, from, next) {
+  // to.matched.some(record => record.meta.requireAuth)
+  // 可在此处
+}
+```
+
+可以在多个路由下面添加这个权限标识，达到控制的目的
+
+只要一切换页面，就需要看有没有这个权限，所以可以在最大的路由下 `main.js` 中配置
+
+**存储信息**
+
+一般的，用户登录后会在本地存储用户的认证信息，可以用 `token`、`cookie` 等,这里我们用 `token`。
+
+将用户的`token`保存到`localStorage`里，而用户信息则存在内存`store`中。这样可以在`vuex`中存储一个标记用户登录状态的属性auth，方便权限控制。
+
+**代码示例**
+
+```js
+// store.js
+{
+  state: {
+    token: window.localStorage.getItem('token'),
+    auth: false,
+    userInfo: {}
+  },
+  mutations: {
+    setToken (state, token) {
+      state.token = token
+      window.localStorage.setItem('token', token)
+    },
+    clearToken (state) {
+      state.token = ''
+      window.localStorage.setItem('token', '')
+    },
+    setUserInfo (state, userInfo) {
+      state.userInfo = userInfo
+      state.auth = true // 获取到用户信息的同时将auth标记为true，当然也可以直接判断userInfo
+    }
+  },
+  actions: {
+    async getUserInfo (ctx, token) {
+      return fetchUserInfo(token).then(response => {
+        if (response.code === 200) {
+          ctx.commit('setUserInfo', response.data)
+        }
+        return response
+      })
+    },
+    async login (ctx, account) {
+      return login(account).then(response => {
+        if (response.code === 200) {
+          ctx.commit('setUserInfo', response.data.userInfo)
+          ctx.commit('setToken', response.data.token)
+        }
+      })
+    }
+  }
+}
+```
+
+写好路由表和vuex之后，给所有路由设置一个全局守卫，在进入路由之前进行权限检查，并导航到对应的路由。
+
+```js
+// router.js
+router.beforeEach(async (to, from, next) => {
+  if (to.matched.some(record => record.meta.requireAuth)) { // 检查是否需要登录权限
+    if (!store.state.auth) { // 检查是否已登录
+      if (store.state.token) { // 未登录，但是有token，获取用户信息
+        try {
+          const data = await store.dispatch('getUserInfo', store.state.token)
+          if (data.code === 200) {
+            next()
+          } else {
+            window.alert('请登录')
+            store.commit('clearToken')
+            next({ name: 'Login' })
+          }
+        } catch (err) {
+          window.alert('请登录')
+          store.commit('clearToken')
+          next({ name: 'Login' })
+        }
+      } else {
+        window.alert('请登录')
+        next({ name: 'Login' })
+      }
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+```
+
+上述的方法是基于`jwt`认证方式，本地不持久化用户信息，只保存`token`，当用户刷新或者重新打开网页时，进入需要登录的页面都会尝试去请求用户信息，该操作在整个访问过程中只进行一次，直到刷新或者重新打开，对于应用后期的开发维护和扩展支持都很好。
+
+### 动态加载菜单和路由(addRoutes)
+
+有时候为了安全，我们需要根据用户权限或者是用户属性去动态的添加菜单和路由表，可以实现对用户的功能进行定制。`vue-router`提供了`addRoutes()`方法，可以动态注册路由，**需要注意的是，动态添加路由是在路由表中push路由，由于路由是按顺序匹配的，因此需要将诸如404页面这样的路由放在动态添加的最后。**
+
+**代码示例**
+
+```js
+// store.js
+// 将需要动态注册的路由提取到vuex中
+const dynamicRoutes = [
+  {
+    path: '/manage',
+    name: 'Manage',
+    meta: {
+      requireAuth: true
+    },
+    component: () => import('./views/Manage')
+  },
+  {
+    path: '/userCenter',
+    name: 'UserCenter',
+    meta: {
+      requireAuth: true
+    },
+    component: () => import('./views/UserCenter')
+  }
+]
+```
+
+在`vuex`中添加`userRoutes`数组用于存储用户的定制菜单。在setUserInfo中根据后端返回的菜单生成用户的路由表。
+
+```js
+// store.js
+setUserInfo (state, userInfo) {
+  state.userInfo = userInfo
+  state.auth = true // 获取到用户信息的同时将auth标记为true，当然也可以直接判断userInfo
+  // 生成用户路由表
+  state.userRoutes = dynamicRoutes.filter(route => {
+    return userInfo.menus.some(menu => menu.name === route.name)
+  })
+  router.addRoutes(state.userRoutes) // 注册路由
+}
+```
+
+修改菜单渲染
+
+```html
+// App.vue
+<div id="nav">
+  <router-link to="/">主页</router-link>|
+  <router-link to="/login">登录</router-link>
+  <template v-for="(menu, index) of $store.state.userInfo.menus">
+    |<router-link :to="{ name: menu.name }" :key="index">{{menu.title}}</router-link>
+  </template>
+</div>
+```
+
+---
+
+前面铺垫了这么多，终于到本篇博客的主题了，下面我们要自己实现一套「动态生成无限菜单+路由」的方案，也就是第二种路由鉴权。
 
 ## 最终实现的菜单列表
 
