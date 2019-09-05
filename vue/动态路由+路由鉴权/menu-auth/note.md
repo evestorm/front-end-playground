@@ -916,3 +916,7 @@ export default new Vuex.Store({
 ```
 
 到此为止就实现了一套 `动态路由 + 路由鉴权` 功能。
+
+## 配套代码
+
+[动态路由+路由鉴权](https://github.com/evestorm/front-end-playground/tree/master/vue/%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%2B%E8%B7%AF%E7%94%B1%E9%89%B4%E6%9D%83/menu-auth)
