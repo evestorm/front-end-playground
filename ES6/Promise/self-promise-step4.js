@@ -51,7 +51,7 @@ function resolvePromise(promise2, x, resolve, reject) { // 判断 x 是不是 pr
   }
   let called // 表示当前有没有被调用过
   // 保证当前 x 是个引用类型（排除null，因为null的typeof是object）
-  if (x !== null && typeof x === 'object' || typeof x === 'function') {
+  if (x!== null && typeof x === 'object' || typeof x === 'function') {
     // 很有可能是个promise
     try {
       let then = x.then // then属性具有getter且throw一个错误时，获取值会发生异常，所以reject，另外之所以let一个then，是防止第二次获取then时报错，所以使用let的方式保证只调用一次
@@ -82,9 +82,7 @@ function resolvePromise(promise2, x, resolve, reject) { // 判断 x 是不是 pr
 Promise.prototype.then = function (onfulfilled, onrejected) {
   // 防止两个回调有不传的情况，导致值穿透 p.then().then().then(1, data => { console.log(data, '123') })
   onfulfilled = typeof onfulfilled === 'function' ? onfulfilled : value => value
-  onrejected = typeof onrejected === 'function' ? onrejected : err => {
-    throw err
-  }
+  onrejected = typeof onrejected === 'function' ? onrejected : err => { throw err }
   let self = this
   // 调用 then 后需要再次返回一个全新的promise
   // 我们需要拿到当前then方法，成功或者失败执行后的结果
@@ -137,7 +135,7 @@ Promise.prototype.then = function (onfulfilled, onrejected) {
 }
 
 // 面试题：让你实现一个promise的延迟对象
-Promise.defer = function () {
+Promise.defer = function() {
   let dfd = {}
   dfd.promise = new Promise((resolve, reject) => {
     dfd.resolve = resolve
