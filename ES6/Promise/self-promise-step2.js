@@ -39,10 +39,10 @@ Promise.prototype.then = function (onfulfilled, onrejected) {
   }
   if (self.status === 'pending') {
     // 订阅
-    self.onFulfilledCallbacks.push(function () {
+    self.onFulfilledCallbacks.push(function() {
       onfulfilled(self.value)
     })
-    self.onRejectedCallbacks.push(function () {
+    self.onRejectedCallbacks.push(function() {
       onrejected(self.err)
     })
   }
