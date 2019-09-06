@@ -1,5 +1,5 @@
 // 1. 基本的 new Promise 实现 + 调用一次 promise 的 then 方法
-// 2. new Promise 中可以含有异步操作
+// 2. new Promise 中可以含有异步操作（状态未改变时，把then中的回调存储起来，状态改变后再执行相应的resolve和reject）
 // 3. 同一个 promise 实例可以多次 then
 function Promise(executor) {
   // 在 Promise 内部定义一个状态 当前 promise 的状态
