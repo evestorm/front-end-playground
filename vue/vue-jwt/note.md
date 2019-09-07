@@ -750,3 +750,74 @@ router.beforeEach(async (to, from, next) => {
   }
 })
 ```
+
+## jwt登录逻辑梳理
+
+### 代码
+
+```js
+// 不需要登录就能访问的白名单
+let whiteList = ['/xxx']
+// 全局校验jwt
+router.beforeEach(async (to, from, next) => {
+  // 白名单免校验
+  if (whiteList.includes(to.path)) {
+    return next()
+  }
+  // 发请求给后端校验jwt
+  let isLogin = await store.dispatch('validate')
+  let needLogin = to.matched.some(match => match.meta.needLogin)
+  if (needLogin) { // 如果需要登录
+    if (isLogin) { // 并且登录了
+      next()
+    } else {
+      next('/login')
+    }
+  } else {
+    if (isLogin && to.name === 'login') {
+      next('/')
+    } else {
+      next()
+    }
+  }
+})
+```
+
+### 文字详细版
+
+- 在 vue-router 中，给需要登录才能访问的路由加上meta，并设置 needLogin 属性
+- 使用 vue 全局路由守卫 beforeEach 拦截所有路由跳转
+- 获取两个必要值：
+  - needLogin：根据 to.meta.needLogin 是否为 true
+  - isLogin：调用 vuex 中的 action「validate」，向服务端发起请求，查看当前用户的 token 是否有效
+    - 这个请求会被 axios.interceptors.request.use 拦截，并在请求头中添加 authorization：bearer = getLocal('token')【localStorage为token或null】
+- 判断 needLogin 是否为 true，不为 true 再判断（是否 isLogin 为 true 且访问的是 login 页面）。
+  - 是则跳转首页（因为当前用户已经登录了再访问login没意义，所以返回首页）
+  - 否，则直接 next() 放行
+- needLogin 为 true ，还需要判断 isLogin 是否为 true
+  - 如果 isLogin 为 true，直接放行
+  - 如果 isLogin 不为 true，跳转 login 页面
+
+### 文字精简版
+
+1. 前端在访问需要登录的页面时，跳转登录页登录
+2. 后端根据登录信息在数据库查询，查询到后利用「密钥」和「加密算法」对「用户数据」做签名 token 并返回给前端
+3. 前端把 token 保存到 vuex 和 localStorage 中
+4. 下次再次请求数据时会先发个请求询问当前 token 是否有效（validate）。
+5. 后端接收到 token 后会查看是否有效，有效则给token续期，把新的token返给前端；无效则返回401
+6. 前端拿到返回信息，如果 401 则转登录页；如果 200 则更新本地token，并携带上新的token继续请求之前要的数据
+
+### 技术点
+
+1. 如何拦截用户请求
+
+- vue 的全局路由守卫 beforeEach
+- 根据 to.meta.needLogin 判断当前跳转的路由是否需要登录
+- 通过向服务端发起一个 validate 请求来验证 token 的有效性来判断当前用户的登录状态
+
+2. 如何在请求中携带 token 的 ？又是如何在响应中判断用户是否需要登录的
+
+- axios.interceptors.request.use 拦截请求
+  - 通过 config.headers.Authorization 携带 token
+- axios.interceptors.response.use 拦截响应
+  - 通过 response.status === 401 判断是否需要登录
