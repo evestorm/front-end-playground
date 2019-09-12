@@ -34,6 +34,23 @@
           <div>子：{{childFooter}}</div>
         </pre>
       </template>
+      <template v-slot:new>
+        <h3>我是新版 v-slot:new 具名插槽</h3>
+        <hr>
+        <pre>
+          <div>父：{{resourceNew}}</div>
+          <div>子：{{childNew}}</div>
+        </pre>
+      </template>
+      <template v-slot:new2='children'>
+        <h3>我是新版具名作用域插槽</h3>
+        <p>{{children.bilibili}}</p>
+        <hr>
+        <pre>
+          <div>父：{{resourceNew2}}</div>
+          <div>子：{{childNew2}}</div>
+        </pre>
+      </template>
     </Children>
   </div>
 </template>
@@ -62,7 +79,24 @@ import Children from './slot-children'
       <slot name='list' :data='list' :msg='msg'></slot>
     </div>`,
         resourceFooter: `<template slot="footer">...</template>`,
-        childFooter: `<slot name='footer'></slot>`
+        childFooter: `<slot name='footer'></slot>`,
+        resourceNew: `
+          <template v-slot:new>
+                            <h3>我是新版 v-slot:new 具名插槽</h3>
+</template>
+        `,
+        childNew: `
+          <slot name='new'></slot>
+        `,
+        resourceNew2: `
+          <template v-slot:new2='children'>
+            <h3>我是新版具名作用域插槽</h3>
+            <p>{{children.bilibili}}</p>
+          </template>
+        `,
+        childNew2: `
+          <slot name='new2' :bilibili='bilibili'></slot>
+        `
       }
     },
     components: {

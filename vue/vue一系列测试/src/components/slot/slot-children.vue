@@ -9,6 +9,12 @@
     <div class="footer">
       <slot name='footer'></slot>
     </div>
+    <div class="new">
+      <slot name='new'></slot>
+    </div>
+    <div class="new2">
+      <slot name='new2' :bilibili='bilibili'></slot>
+    </div>
   </div>
 </template>
 
@@ -17,7 +23,8 @@
     data() {
       return {
         list: ['front-end', 'back-end', 'fullstack'],
-        msg: 'Lance'
+        msg: 'Lance',
+        bilibili: '哔哩哔哩干杯'
       }
     },
   }
@@ -35,6 +42,11 @@
 .footer {
   width: 100%;
   background-color: #e1e1e1;
+  text-align: center;
+}
+.new {
+  width: 100%;
+  background: green;
   text-align: center;
 }
 </style>
