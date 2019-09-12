@@ -8,6 +8,7 @@
     <router-link :to="{name: 'swCommon'}" tag="li">Vue常用内容</router-link>
     <router-link :to="{name: 'swProvide'}" tag="li">provide/inject依赖注入</router-link>
     <router-link :to="{name: 'swSync'}" tag="li">sync修饰符————>对一个 prop 进行“双向绑定”</router-link>
+    <router-link :to="{name: 'swSlot'}" tag="li">slot插槽</router-link>
   </div>
 </template>
 

@@ -9,6 +9,7 @@ import swFor from '@/components/v-for/v-for.vue';
 import swCommon from '@/components/common/common.vue';
 import swProvide from '@/components/provide/provide.vue';
 import swSync from '@/components/sync/sync.vue';
+import swSlot from '@/components/slot/slot-parent.vue';
 
 Vue.use(Router)
 
@@ -21,6 +22,7 @@ export default new Router({
     { path: '/swFor', name: 'swFor', component: swFor },
     { path: '/swCommon', name: 'swCommon', component: swCommon },
     { path: '/swProvide', name: 'swProvide', component: swProvide },
-    { path: '/swSync', name: 'swSync', component: swSync }
+    { path: '/swSync', name: 'swSync', component: swSync },
+    { path: '/swSlot', name: 'swSlot', component: swSlot }
   ]
 })
