@@ -1,0 +1,21 @@
+{
+  "code": 200,
+  "data": {
+    "dataList": [
+      null,
+      null,
+      null,
+      {
+        "memberId": "0000117"
+      },
+      {
+        "memberId": "第四页完"
+      }
+    ],
+    "pageCount": 4,
+    "pageNum": 3,
+    "pageSize": 50,
+    "rowCount": 155
+  },
+  "msg": "操作成功"
+}

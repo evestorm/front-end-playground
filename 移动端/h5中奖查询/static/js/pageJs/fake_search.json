@@ -1,0 +1,27 @@
+{
+  "code": 200,
+  "data": {
+    "dataList": [
+      {
+        "memberId": "9991203"
+      },
+      {
+        "memberId": "2221342"
+      },
+      {
+        "memberId": "2221123"
+      },
+      {
+        "memberId": "0000117"
+      },
+      {
+        "memberId": "搜索member"
+      }
+    ],
+    "pageCount": 1,
+    "pageNum": 1,
+    "pageSize": 50,
+    "rowCount": 5
+  },
+  "msg": "操作成功"
+}
