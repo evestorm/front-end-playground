@@ -1,0 +1,14 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/info/info"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "新闻快讯",
+    "navigationBarBackgroundColor": "#3b9fe2",
+    "backgroundColor": "#F8F8F8"
+  },
+  "usingComponents": {}
+}

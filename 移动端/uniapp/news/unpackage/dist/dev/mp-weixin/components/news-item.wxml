@@ -1,0 +1,1 @@
+<view class="news-item"><view class="news-meta"><view class="news-title">{{news.title}}</view><view class="news-info"><view class="news-source">{{news.source}}</view><view class="news-time">{{news.date}}</view></view></view><image class="news-image" src="{{news.firstImage}}" mode="aspectFill"></image></view>

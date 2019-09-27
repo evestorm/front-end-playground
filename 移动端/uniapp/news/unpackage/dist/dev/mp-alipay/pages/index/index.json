@@ -1,0 +1,7 @@
+{
+  "defaultTitle": "新闻快讯",
+  "pullRefresh": true,
+  "usingComponents": {
+    "news-item": "/components/news-item"
+  }
+}
