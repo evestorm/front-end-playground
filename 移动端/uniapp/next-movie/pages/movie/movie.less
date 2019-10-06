@@ -1,0 +1,139 @@
+// 视频播放
+.player {
+	display: flex;
+	justify-content: center;
+	background-color: black;
+	.movie {
+		width: 100%;
+		height: 440rpx;
+	}
+}
+
+/* 基本信息 */
+.movie-info {
+	display: flex;
+	flex-direction: row;
+	background-color: #f7f4f9;
+	padding: 40rpx 20rpx;
+	.cover {
+		width: 280rpx;
+		height: 380rpx;
+	}
+	.movie-desc {
+		display: flex;
+		flex-direction: column;
+		margin-left: 30rpx;
+		width: 400rpx;
+		.title {
+			font-size: 30px;
+		}
+		.basic-info {
+			color: darkgray;
+			font-size: 13px;
+			line-height: 36rpx;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		/* 评分 */
+		.score-block {
+			background-color: white;
+			margin-top: 20rpx;
+			width: 360rpx;
+			height: 90rpx;
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+			padding: 20rpx;
+			/* 阴影效果 */
+			box-shadow: 3px 2px 10px #dedede;
+			.big-score {
+				display: flex;
+				flex-direction: column;
+				.score-words {
+					font-size: 12px;
+					color: gray;
+				}
+				.movie-score {
+					font-size: 24px;
+					font-weight: bold;
+					margin-left: 8rpx;
+					color: orange;
+				}
+			}
+			.score-stars {
+				margin-left: 10upx;
+				.prise-counts {
+					font-size: 12px;
+					color: gray;
+					line-height: 44rpx;
+				}
+			}
+		}
+	}
+}
+
+// 分割线
+.line-wrapper {
+	padding: 0px 20rpx;
+	.line {
+		height: 1px;
+		background-color: #DBDBDA;
+	}
+}
+
+// 剧情介绍
+.plots-block {
+	background-color: #f7f4f9;
+	padding: 20rpx 40rpx;
+	.plots-title {
+		font-size: 14px;
+		color: gray;
+	}
+	
+	.plots-desc {
+		margin-top: 10rpx;
+		font-size: 16px;
+	}
+}
+
+/* 剧照 */
+.scroll-block {
+	background-color: #f7f4f9;
+	padding: 20rpx 40rpx;
+	.scroll-list {
+		width: 100%;
+		white-space: nowrap;
+		margin-top: 20rpx;
+		.actor-wrapper {
+			display: inline-block;
+			.single-actor {
+				width: 170rpx;
+				height: 240rpx;
+				margin-right: 10rpx;
+			}
+			.actor-name {
+				width: 170rpx;
+				font-size: 15rpx;
+				text-align: center;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			.actor-role {
+				width: 170rpx;
+				font-size: 13rpx;
+				color: #A9A9A9;
+				text-align: center;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+		.plot-image {
+			width: 220rpx;
+			height: 320rpx;
+			margin-right: 10rpx;
+		}
+	}
+}

@@ -1,0 +1,56 @@
+.page-fill {
+	width: 100%;
+	height: 100%;
+	.header {
+		/* #ifdef MP */
+		padding: 0rpx 30rpx 40rpx 30rpx;
+		/* #endif */
+		/* #ifndef MP */
+		padding: 120rpx 30rpx 40rpx 30rpx;
+		/* #endif */
+		background-color: #ffd655;
+		/* 设置网络背景图 */
+		background: url(http://122.152.205.72:88/group1/M00/00/03/CpoxxFwu_1OAYFAIAAAzO_Q1tPg693.png) repeat;
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		.face {
+			width: 120rpx;
+			height: 120rpx;
+			border-radius: 50%;
+			/* 防止头像被挤压*/
+			flex-shrink: 0;
+		}
+		.info-wrapper {
+			width: 80%;
+			margin-left: 40rpx;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			.nickname {
+				color: #6a5018;
+				font-size: 18px;
+				font-weight: bold;
+			}
+			.nav-info {
+				color: #a38eb2;
+				font-size: 14px;
+				margin-top: 10rpx;
+			}
+		}
+		.set-wrapper {
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-end;
+			width: 15%;
+			.settings {
+				width: 40rpx;
+				height: 40rpx;
+			}
+		}
+		.regist-login {
+			margin-left: 60rpx;
+			margin-top: 30rpx;
+		}
+	}
+}

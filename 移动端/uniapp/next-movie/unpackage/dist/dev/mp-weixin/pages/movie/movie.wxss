@@ -1,0 +1,173 @@
+.player.data-v-f1e9858c {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: black;
+}
+.player .movie.data-v-f1e9858c {
+  width: 100%;
+  height: 440rpx;
+}
+/* 基本信息 */
+.movie-info.data-v-f1e9858c {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  background-color: #f7f4f9;
+  padding: 40rpx 20rpx;
+}
+.movie-info .cover.data-v-f1e9858c {
+  width: 280rpx;
+  height: 380rpx;
+}
+.movie-info .movie-desc.data-v-f1e9858c {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-left: 30rpx;
+  width: 400rpx;
+  /* 评分 */
+}
+.movie-info .movie-desc .title.data-v-f1e9858c {
+  font-size: 30px;
+}
+.movie-info .movie-desc .basic-info.data-v-f1e9858c {
+  color: darkgray;
+  font-size: 13px;
+  line-height: 36rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+}
+.movie-info .movie-desc .score-block.data-v-f1e9858c {
+  background-color: white;
+  margin-top: 20rpx;
+  width: 360rpx;
+  height: 90rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  padding: 20rpx;
+  /* 阴影效果 */
+  -webkit-box-shadow: 3px 2px 10px #dedede;
+          box-shadow: 3px 2px 10px #dedede;
+}
+.movie-info .movie-desc .score-block .big-score.data-v-f1e9858c {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.movie-info .movie-desc .score-block .big-score .score-words.data-v-f1e9858c {
+  font-size: 12px;
+  color: gray;
+}
+.movie-info .movie-desc .score-block .big-score .movie-score.data-v-f1e9858c {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 8rpx;
+  color: orange;
+}
+.movie-info .movie-desc .score-block .score-stars.data-v-f1e9858c {
+  margin-left: 10rpx;
+}
+.movie-info .movie-desc .score-block .score-stars .prise-counts.data-v-f1e9858c {
+  font-size: 12px;
+  color: gray;
+  line-height: 44rpx;
+}
+.line-wrapper.data-v-f1e9858c {
+  padding: 0px 20rpx;
+}
+.line-wrapper .line.data-v-f1e9858c {
+  height: 1px;
+  background-color: #DBDBDA;
+}
+.plots-block.data-v-f1e9858c {
+  background-color: #f7f4f9;
+  padding: 20rpx 40rpx;
+}
+.plots-block .plots-title.data-v-f1e9858c {
+  font-size: 14px;
+  color: gray;
+}
+.plots-block .plots-desc.data-v-f1e9858c {
+  margin-top: 10rpx;
+  font-size: 16px;
+}
+/* 剧照 */
+.scroll-block.data-v-f1e9858c {
+  background-color: #f7f4f9;
+  padding: 20rpx 40rpx;
+}
+.scroll-block .scroll-list.data-v-f1e9858c {
+  width: 100%;
+  white-space: nowrap;
+  margin-top: 20rpx;
+}
+.scroll-block .scroll-list .actor-wrapper.data-v-f1e9858c {
+  display: inline-block;
+}
+.scroll-block .scroll-list .actor-wrapper .single-actor.data-v-f1e9858c {
+  width: 170rpx;
+  height: 240rpx;
+  margin-right: 10rpx;
+}
+.scroll-block .scroll-list .actor-wrapper .actor-name.data-v-f1e9858c {
+  width: 170rpx;
+  font-size: 15rpx;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+}
+.scroll-block .scroll-list .actor-wrapper .actor-role.data-v-f1e9858c {
+  width: 170rpx;
+  font-size: 13rpx;
+  color: #A9A9A9;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+}
+.scroll-block .scroll-list .plot-image.data-v-f1e9858c {
+  width: 220rpx;
+  height: 320rpx;
+  margin-right: 10rpx;
+}
+

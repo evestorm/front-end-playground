@@ -1,0 +1,22 @@
+.movie-score-wrapper.data-v-22032092 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+.movie-score-wrapper .star-ico.data-v-22032092 {
+  width: 20rpx;
+  height: 20rpx;
+  margin-top: 6rpx;
+}
+.movie-score-wrapper .star-score.data-v-22032092 {
+  font-size: 12px;
+  color: dimgrey;
+  margin-left: 8rpx;
+}
+

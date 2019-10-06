@@ -1,0 +1,13 @@
+接口文档:https://www.imovietrailer.com/superhero/doc.html
+验证qq:466481615（请勿与他人共享验证qq号）
+
+
+
+
+header:{
+	'content-type':'application/x-www-form-urlencoded'
+	},
+
+data:{
+	qq:'466481615'
+				},

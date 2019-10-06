@@ -1,0 +1,42 @@
+// 搜索栏
+.search-block {
+	position: fixed;
+	top: 100;
+	z-index: 9999;
+	display: flex;
+	flex-direction: row;
+	padding: 0 20rpx 20rpx 20rpx;
+	background-color: #f8f8f8;
+	.search-ico-wrapper {
+		background-color: #eaeaea;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding: 0 10rpx;
+		.search-ico {
+			width: 40rpx;
+			height: 40rpx;
+		}
+	}
+	.search-text {
+		font-size: 14px;
+		background-color: #eaeaea;
+		height: 60rpx;
+		width: 650rpx;
+	}
+}
+// 搜索结果列表
+.movie-list {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	padding: 100rpx 10rpx 0 10rpx;
+	.movie-wrapper {
+		padding: 10rpx 20rpx;
+		.poster {
+			width: 200rpx;
+			height: 270rpx;
+		}
+	}
+}

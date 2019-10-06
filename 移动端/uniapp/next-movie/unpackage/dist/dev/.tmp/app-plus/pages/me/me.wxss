@@ -1,0 +1,87 @@
+.page-fill.data-v-cc342e50 {
+  width: 100%;
+  height: 100%;
+}
+.page-fill .header.data-v-cc342e50 {
+
+
+  padding: 120rpx 30rpx 40rpx 30rpx;
+
+  background-color: #ffd655;
+  /* 设置网络背景图 */
+  background: url(http://122.152.205.72:88/group1/M00/00/03/CpoxxFwu_1OAYFAIAAAzO_Q1tPg693.png) repeat;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+.page-fill .header .face.data-v-cc342e50 {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  /* 防止头像被挤压*/
+  -webkit-flex-shrink: 0;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+}
+.page-fill .header .info-wrapper.data-v-cc342e50 {
+  width: 80%;
+  margin-left: 40rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+.page-fill .header .info-wrapper .nickname.data-v-cc342e50 {
+  color: #6a5018;
+  font-size: 18px;
+  font-weight: bold;
+}
+.page-fill .header .info-wrapper .nav-info.data-v-cc342e50 {
+  color: #a38eb2;
+  font-size: 14px;
+  margin-top: 10rpx;
+}
+.page-fill .header .set-wrapper.data-v-cc342e50 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  width: 15%;
+}
+.page-fill .header .set-wrapper .settings.data-v-cc342e50 {
+  width: 40rpx;
+  height: 40rpx;
+}
+.page-fill .header .regist-login.data-v-cc342e50 {
+  margin-left: 60rpx;
+  margin-top: 30rpx;
+}
+
