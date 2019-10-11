@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/uniIcon/uniIcon",
+    "pages/imageSource/imageSource",
+    "pages/v-show/v-show",
+    "pages/modal/modal",
+    "pages/classAndStyle/classAndStyle"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap96.json"
+}

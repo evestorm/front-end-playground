@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "sw-image": "/components/swImage"
+  }
+}

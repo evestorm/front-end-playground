@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"title { font-size: ",[0,36],"; color: #8f8f94; }\n",],undefined,{path:"./pages/imageSource/imageSource.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/imageSource/imageSource.wxml') } }));

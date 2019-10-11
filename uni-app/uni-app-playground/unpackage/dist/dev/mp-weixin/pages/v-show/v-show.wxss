@@ -1,0 +1,7 @@
+.item.data-v-bbdc9534 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
