@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Grid 长度范围 min-max</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		.container {
+			display: grid;
+			grid-template-columns: repeat(3, 100px);
+			grid-template-rows: repeat(3, 100px);
+			grid-column-gap: 30px;
+			grid-row-gap: 10px;
+		}
+
+		.item {
+			font-size: 4em;
+			text-align: center;
+		}
+
+		.item1 {
+			background: lightblue;
+		}
+
+		.item2 {
+			background: lightcoral;
+		}
+
+		.item3 {
+			background: lightcyan;
+		}
+
+		.item4 {
+			background: lightslategrey;
+		}
+
+		.item5 {
+			background: lightgreen;
+		}
+
+		.item6 {
+			background: lightseagreen;
+		}
+
+		.item7 {
+			background: lightskyblue;
+		}
+
+		.item8 {
+			background: yellow;
+		}
+
+		.item9 {
+			background: lightslategrey;
+		}
+
+	</style>
+</head>
+
+<body>
+	<!-- auto关键字表示由浏览器自己决定长度。 -->
+	<div class="container">
+		<div class="item item1">1</div>
+		<div class="item item2">2</div>
+		<div class="item item3">3</div>
+		<div class="item item4">4</div>
+		<div class="item item5">5</div>
+		<div class="item item6">6</div>
+		<div class="item item7">7</div>
+		<div class="item item8">8</div>
+		<div class="item item9">9</div>
+	</div>
+</body>
+
+</html>
