@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const webpack = require('webpack')
 
 module.exports = {
   entry: {
@@ -11,6 +12,15 @@ module.exports = {
     publicPath: '',
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist')
+  },
+  devServer: {
+    inline: true, //打包后加入一个 websocket 客户端
+    hot: true, // 启用热更新 的 第1步
+    open: true, // 自动打开浏览器
+    contentBase: path.resolve(__dirname, 'dist'), // 指定托管的根目录，不注释的话，无法访问 src 以外的资源，比如 node_modules
+    host: '127.0.0.1', // 主机地址
+    port: 4321, // 设置启动时候的运行端口
+    compress: true // 开发服务器是否启动gzip等压缩
   },
   module: { // 针对具体模块设置解析规则
     rules: [{
@@ -53,7 +63,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/index.html'
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ],
   mode: 'development', // 生产环境[production]打包（会压缩代码）or 开发环境[development]打包（不压缩代码）
 }
