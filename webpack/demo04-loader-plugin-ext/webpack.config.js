@@ -1,6 +1,8 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const {
+  CleanWebpackPlugin
+} = require('clean-webpack-plugin');
 const webpack = require('webpack')
 
 module.exports = {
@@ -53,10 +55,14 @@ module.exports = {
             importLoaders: 2, // 意思是如果 scss 文件中又 import 了一个 scss 文件，为了防止它不重新走一个完整的 scss 文件处理流程，所以添加一个 importLoaders 配置，让其也能走完 postcss-loader 和 sass-loader 的处理流程
             // modules: true, // 开启css的模块化打包
           }
-        }, 
-        'sass-loader', 
+        },
+        'sass-loader',
         'postcss-loader'
       ]
+    }, {
+      test: /\.js$/,
+      exclude: /node_modules/, // 排除第三方代码进行ES6转ES5操作
+      loader: "babel-loader"
     }]
   },
   plugins: [
