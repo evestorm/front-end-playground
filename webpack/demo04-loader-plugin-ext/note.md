@@ -223,6 +223,13 @@ arr.map(item => {
 
 5. 这样一来，`@babel/preset-env` 就会根据我们业务代码js中的实际情况进行对特定语法或API的实现，例如我们只用到了 `Promise` 和 `map` ，那么`@babel/preset-env` 就只会对它俩进行实现。我们再次执行 `npm run bundle` ，就会发现打包后的 `main.js` 体积变得小了很多：`main.js   87.7 KiB`
 
+p.s. 细心的你如果查看启动 `npm run bundle` 后的控制台打印，就会发现这样一句话：
+
+> When setting `useBuiltIns: 'usage'`, polyfills are automatically imported when needed.
+> Please remove the `import '@babel/polyfill'` call or use `useBuiltIns: 'entry'` instead.
+
+这句话的意思是，在新版 webpack4 中，一旦你在 `.babelrc` 下对 `@babel/preset-env` 做了「useBuiltIns: 'usage'」的配置，就不用在编写了 es6 语法的 js 文件开头引入 `import "@babel/polyfill";` 了。`@babel/polyfill"` 会自动的引入所需代码，所以我们可以删除 `index.js` 中开头的引入。
+
 ### 更多配置
 
 #### targets
