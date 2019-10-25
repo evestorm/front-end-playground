@@ -3,7 +3,6 @@ const common = require('./webpack.common');
 
 module.exports = merge(common, {
   mode: 'development',
-  entry: './src/index.js',
   devtool: 'cheap-module-eval-source-map',
   output: {
     filename: '[name].js',
