@@ -13,7 +13,7 @@ _.join(['a', 'b', 'c', '-']);
 这里引入lodash并调用join方法，然后安装下lodash: npm i lodash
 npm run build, 可以看到lodash和业务代码都打包在一起了，并且有70kb:
 
-![clipboard.png](images/squares-20191025075618275.svg)
+![clipboard.png](images/bVbsOsM.png)
 
 这里就会有个问题，项目中会引入很多第三方库，这些库根业务无关，内容几乎是不会改变的，如果都打包到一起，那么浏览器想要看到效果就必须执行完整个超大的main.js文件，如果能把不会变动的代码(不管是第三方还是自己写的)，都单独打包到一个文件，且文件名每次都一样，那么浏览器以后刷新就能直接在缓存中读取，从而提升页面性能，这就是所谓的代码分割。
 
@@ -48,9 +48,9 @@ entry: {
 
 执行npm run build:
 
-![clipboard.png](https://cdn.segmentfault.com/v-5db16590/global/img/squares.svg)
+![clipboard.png](images/bVbsOuG.png)
 
-可以看到lodash被单独打包成了一个文件，这就是代码分割
+可以看到llodash被单独打包成了一个文件，这就是代码分割
 
 ## 用webpack实现代码分割
 
@@ -104,6 +104,8 @@ module.exports = merge(baseConfig, {
 
 然后npm run build:
 
+![clipboard.png](images/bVbsOxa.png)
+
 
 
 ---
@@ -114,7 +116,7 @@ module.exports = merge(baseConfig, {
 
 之前src/index.js里都是同步代码：
 
-![clipboard.png](images/squares-20191025075747139.svg)
+![clipboard.png](images/bVbsOyT.png)
 
 现在来写段异步逻辑，修改src/index.js:
 
@@ -141,7 +143,7 @@ import()可以不加载文件并返回promise,参考：[https://developer.mozill
 
 现在来npm run build:
 
-![clipboard.png](https://cdn.segmentfault.com/v-5db16590/global/img/squares.svg)
+![clipboard.png](images/bVbsOzc.png)
 因为import()还只是个提案，我们得安装 @babel/plugin-syntax-dynamic-import插件才能用：
 npm i @babel/plugin-syntax-dynamic-import -D
 
@@ -178,7 +180,7 @@ module.exports = {
 
 再次npm run build，和之前一样会进行代码分割
 
-![clipboard.png](https://cdn.segmentfault.com/v-5db16590/global/img/squares.svg)
+![clipboard.png](images/bVbsOAP.png)
 
 修改webpack/webpack.prod.js， 注释chunk属性：
 
@@ -210,15 +212,15 @@ module.exports = {
 
 先来打个包，npm run build：
 
-![clipboard.png](images/squares-20191025080529042.svg)
+![clipboard.png](images/bVbsOCe.png)
 
 可以看到lodash打包后的名字是vendors~lodash，这其实跟src/index.js中的一段注释有关：
 
-![clipboard.png](https://cdn.segmentfault.com/v-5db16590/global/img/squares.svg)
+![clipboard.png](images/bVbsOCm.png)
 
 现在删掉这段注释再打包：
 
-![clipboard.png](https://cdn.segmentfault.com/v-5db16590/global/img/squares.svg)
+![clipboard.png](images/bVbsOCo.png)
 
 就默认用[id]命名了，这就是魔法注释的作用，还有其它魔法注释如：
 / *webpackPrefetch: true* / 这段表示改模块开启Prefetch预加载<link rel="prefetch" href="verdor~main.js">
@@ -245,7 +247,7 @@ optimization: {
 
 再打包：
 
-![clipboard.png](https://cdn.segmentfault.com/v-5db16590/global/img/squares.svg)
+![clipboard.png](images/bVbsODt.png)
 这样就没有vendor~前缀了。
 
 ## splitChunks其它属性
@@ -368,4 +370,38 @@ splitChunks: { // 代码分隔配置
    }
 ```
 
-下节：[懒加载](https://segmentfault.com/a/1190000019222013)
+# webpack 懒加载
+
+其实在代码分割时已经用过懒加载了，src/index.js内容如下：
+
+```
+function getComponent() {
+  const element = document.createElement('div');
+  return import(/* webpackChunkName: "lodash" */ 'lodash').then(({ default: _ }) => {
+    const element = document.createElement('div');
+    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+    return element;
+  }).catch(error => 'An error occurred while loading the component');
+}
+
+
+// 按需加载，当点击了页面，才会引入lodash，也是单页应用路由懒加载的实现原理
+window.addEventListener('click', function(){
+ getComponent().then(component => {
+    document.body.appendChild(component);
+  })
+});
+```
+
+npm run build看生成的文件：
+
+![clipboard.png](../demo06-code-spliting/images/bVbsOHu.png)
+这三个文件将被用于浏览器，现在运行index.html打开f12:
+
+![clipboard.png](../demo06-code-spliting/images/bVbsOIc.png)
+
+如果不点击页面，就不会加载lodash文件，现在点击一下页面：
+
+![clipboard.png](../demo06-code-spliting/images/bVbsOIh.png)
+
+页面上出现hello webpack并且加载了lodash文件，这就是懒加载（按需加载 | 异步加载）
