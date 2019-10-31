@@ -1,0 +1,39 @@
+// {
+//   "presets": [
+//     ["@babel/env", {
+//       // 设置打包后的代码将在哪些浏览器运行？只针它们做转化
+//       "targets": {
+//         "edge": "17",
+//         "firefox": "60",
+//         "chrome": "67",
+//         "safari": "11.1",
+//       },
+
+//       // 目前@babel/polyfill依赖的core-js@2，需要指定此选项并安装
+//       "corejs": 2,
+
+//       /*
+//        * @babel/polyfill会将所有高阶语法转化，配置useBuiltIns只转化项目中用到的语法
+//        *797k => 291k
+//        * 当useBuiltIns: "usage"时，入口文件就不需要import "@babel/polyfill"了
+//        * 当useBuiltIns: "entry"时，需要在入口文件里import "@babel/polyfill"
+//        * */
+//       "useBuiltIns": "usage"
+//     }]
+//   ],
+//   "plugins": ["@babel/plugin-syntax-dynamic-import"]
+// }
+// 不写上面代码也行
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "chrome": 58
+        },
+        "useBuiltIns": "usage"
+      }
+    ]
+  ]
+}
