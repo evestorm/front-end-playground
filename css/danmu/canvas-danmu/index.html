@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .video {
+      position: relative;
+      background: yellow;
+      width: 720px;
+      height: 480px;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h1>听妈妈的话 - 周杰伦</h1>
+    <div class="main">
+      <!-- <video src="./resource/233.mp4" id="video" controls width="720" height="480"></video> -->
+      <div class="video" id="video">
+        <canvas id="canvas"></canvas>
+      </div>
+    </div>
+    <!-- <div class="content">
+      <input type="text" id="text">
+      <input type="button" value="发弹幕" id="btn">
+      <input type="color" id="color">
+      <input type="range" id="range" max="40" min="20">
+    </div> -->
+    <div class="content">
+      <input id="play" type="button" value="播放">
+      <input id="pause" type="button" value="暂停">
+      <input id="replay" type="button" value="重放">
+    </div>
+  </div>
+  <!-- 引入index.js文件用来实现弹幕功能 -->
+  <script src="./index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+// export const barrageData = [{
+const barrageData = [{
+  avatar: './img/avatar1.png',
+  text: '先帝创业未半而中道崩殂'
+}, {
+  avatar: './img/avatar2.png',
+  text: '今天下三分'
+}, {
+  avatar: './img/avatar2.png',
+  text: '益州疲弊'
+}, {
+  avatar: './img/avatar3.png',
+  text: '此诚危急存亡之秋也'
+}, {
+  avatar: './img/avatar1.png',
+  text: '然侍卫之臣不懈于内'
+}, {
+  avatar: './img/avatar3.png',
+  text: '忠志之士忘身于外者'
+}, {
+  avatar: './img/avatar1.png',
+  text: '盖追先帝之殊遇'
+}, {
+  avatar: './img/avatar1.png',
+  text: '欲报之于陛下也'
+}, {
+  avatar: './img/avatar2.png',
+  text: '诚宜开张圣听'
+}, {
+  avatar: './img/avatar3.png',
+  text: '以光先帝遗德'
+}, {
+  avatar: './img/avatar3.png',
+  text: '恢弘志士之气'
+}, {
+  avatar: './img/avatar1.png',
+  text: '不宜妄自菲薄'
+}, {
+  avatar: './img/avatar2.png',
+  text: '引喻失义'
+}, {
+  avatar: './img/avatar1.png',
+  text: '以塞忠谏之路也'
+}]

@@ -1,0 +1,62 @@
+html {
+  font-size: 10px;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#container {
+  overflow: hidden;
+  width: 95vw;
+  height: 80vh;
+  position: relative;
+  background: purple;
+}
+
+.barrage {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  animation: barrage 5s linear 0s;
+}
+
+.barrage .img {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  padding: 0.3rem;
+  width: 4rem;
+  height: 4rem;
+  background: white;
+  border-radius: 2rem;
+}
+
+.barrage .content {
+  position: relative;
+  white-space: nowrap;
+  color: #FF0076;
+  z-index: 0;
+  font-size: 1.5rem;
+  box-sizing: border-box;
+  border-bottom-right-radius: 1.1rem;
+  border-top-right-radius: 1.1rem;
+  padding: 0 1rem;
+  margin-left: -0.5rem;
+  background: white;
+}
+
+@keyframes barrage {
+  from {
+    left: 100%;
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    left: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+}

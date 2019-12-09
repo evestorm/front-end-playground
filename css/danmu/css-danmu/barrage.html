@@ -1,0 +1,862 @@
+<!--这是弹幕的页面--->
+<!DOCTYPE html>
+<html manifest='barrage.cache'>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>不碰撞弹幕</title>
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" name="viewport" />
+		<link href="css/barrage.css?_version_=10.10.31" type="text/css" rel="stylesheet">
+		<link href="css/animate.css?_version_=10.10.31" type="text/css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="_hbg_block_ad">
+
+			<div class="system_page">
+
+				<div>总个数:<span class='all_number'>0</span></div>
+				<div>当前屏幕占有率:<span class='screen_value'>0</span></div>
+				<div>赛跑者总个数:<span class='runner_all_number'>0</span></div>
+				<div>屏幕上赛跑者个数:<span class='screen_runner_all_number'>0</span></div>
+
+				<div>屏幕上赛跑者个数峰值:<span class='screen_runner_all_number_max'>0</span></div>
+				<div>接力失败个数:<span class='fail_queue'>0</span></div>
+				<span style="padding:4px 0px;display:inline-block;">占有率</span>
+				<select class="screen_value_select">
+					<option value='2'>2</option>
+					<option value='3'>3</option>
+					<option value='4'>4</option>
+					<option value='5'>5</option>
+					<option value='6'>6</option>
+					<option value='7'>7</option>
+					<option value='8'>8</option>
+					<option value='9'>9</option>
+					<option value='10'>10</option>
+					<option value='11'>11</option>
+					<option value='12'>12</option>
+					<option value='13'>13</option>
+					<option value='14'>14</option>
+					<option value='15'>15</option>
+					<option value='16'>16</option>
+					<option value='17'>17</option>
+					<option value='18'>18</option>
+					<option value='19'>19</option>
+					<option value='20' selected>20</option>
+				</select>
+				<br />
+				<span style="padding:4px 0px;display:inline-block;">控制暂停</span>
+				<button id='control'>暂停</button>
+				<br />
+				<br />
+				<span style="padding:4px 0px;display:inline-block;">弹幕内容</span>
+				<input type='text' placeholder='请输入弹幕内容' id='add_danmu_input'/>
+				<span style="padding:4px 0px;display:inline-block;">弹幕个数</span>
+				<input type='number' placeholder='请输入弹幕个数' id='add_danmu_num' value='1'/>
+				<button id='add_danmu'>增加弹幕</button>
+			</div>
+			<div class="danmu_container_wrap">
+				<div class="danmu_container">
+
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="js/zepto.min.js?_version_=10.10.31"></script>
+	<script src="js/zepto.ajax.js?_version_=10.10.31"></script>
+	<script src="js/zepto.event.min.js?_version_=10.10.31"></script>
+	<script src='js/nb_tmpl.js?_version_=10.10.31'></script>
+	<script>
+		(function() {
+			//1是到场欢迎的，2是祝福语言
+			(function() {
+				//0是系统对大家的祝福，1是欢迎界面，2是大家的祝福
+
+// 				var array = [
+// //					{
+// //						url: 'http://active.qiutianaimeili.com/one_year_head_1.jpg',
+// //						text: '66666',
+// //						type: 2
+// //					}, {
+// //						url: 'http://active.qiutianaimeili.com/one_year_head_2.jpg',
+// //						text: '扎心了，老铁',
+// //						type: 2
+// //					}, {
+// //						url: 'http://active.qiutianaimeili.com/one_year_head_3.jpg',
+// //						text: '今天踩到狗屎了',
+// //						type: 2
+// //					}, {
+// //						url: 'http://active.qiutianaimeili.com/one_year_head_4.jpg',
+// //						text: '不错，赞一个',
+// //						type: 2
+// //					}, {
+// //						url: 'http://active.qiutianaimeili.com/one_year_head_5.jpg',
+// //						text: '真的吗，我有点不相信',
+// //						type: 2
+// //					}, {
+// //						url: 'http://active.qiutianaimeili.com/one_year_head_6.jpg',
+// //						text: '好的，没问题',
+// //						type: 2
+// //					}, {
+// //						url: 'http://active.qiutianaimeili.com/one_year_head_7.jpg',
+// //						text: '这里有一个大帅哥',
+// //						type: 2
+// //					}, {
+// //						url: 'http://active.qiutianaimeili.com/one_year_head_8.jpg',
+// //						text: '天要下雨，娘要嫁人',
+// //						type: 2
+// //					}, {
+// //						url: 'http://active.qiutianaimeili.com/one_year_head_9.jpg',
+// //						text: '战狼2票房破纪录啦',
+// //						type: 2
+// //					}, {
+// //						url: 'http://active.qiutianaimeili.com/one_year_head_10.jpg',
+// //						text: '鹿晗公布恋情啦',
+// //						type: 2
+// //					},
+// 					{
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_11.jpg',
+// 						text: '阔以',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_12.jpg',
+// 						text: '爱奇艺太坑爹了',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_13.jpg',
+// 						text: '火影忍者完结了吗？',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_14.jpg',
+// 						text: '二次元',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_15.jpg',
+// 						text: '今天要下雨',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_16.jpg',
+// 						text: '饼干挺不错的',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_17.jpg',
+// 						text: '晚上出去浪',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_18.jpg',
+// 						text: '我家养了一条狗',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_19.jpg',
+// 						text: '名字叫做B仔',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_20.jpg',
+// 						text: '中国深圳',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_21.jpg',
+// 						text: '中国足球',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_22.jpg',
+// 						text: '全球变暖，海平面上升',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_23.jpg',
+// 						text: '你今天跑步了吗',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_24.jpg',
+// 						text: '你们直到黄花梨吗',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_25.jpg',
+// 						text: '菜市场开门了',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_26.jpg',
+// 						text: '不错，今天终于开张了',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_27.jpg',
+// 						text: '蚯蚓',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_28.jpg',
+// 						text: '香蕉和枣子一起吃有特殊的味道',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_29.jpg',
+// 						text: '听说下雨天和巧克力更配哦',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_30.jpg',
+// 						text: 'iphone爆炸了',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_31.jpg',
+// 						text: '不要在充电的时候玩手机',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_32.jpg',
+// 						text: '早睡早起好身体',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_33.jpg',
+// 						text: '微微一笑很倾城',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_34.jpg',
+// 						text: 'abcdefg',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_35.jpg',
+// 						text: '西安的路好干净啊',
+// 						type: 2
+// 					}, {
+// 						url: 'http://active.qiutianaimeili.com/one_year_head_36.jpg',
+// 						text: '秋天爱美丽',
+// 						type: 2,
+// 					}
+// 				];
+
+				var array = [];
+				// var data = '';
+				// var query = 'sign=cffe61fbb14b36011df1b8f48dab1426&data=%7B%22platform%22%3A%225%22%2C%22openid%22%3A%22ohf4ds7xZ-wJ6_QXE3Y_pHNTwBZ0%22%2C%22page%22%3A1%2C%22page_size%22%3A6%2C%22last_id%22%3A0%7D';
+				$.ajax({
+					type: "get",
+					url: "https://test-miniprogram.com/api/news/list?type=gn",
+					// data: data,
+					dataType: "json",
+					success: function(res){
+							$.each(res.result, function (index, item) {
+								var tmp = {
+									url : item.firstImage,
+									text: item.title,
+									type: 2
+								}
+								array.push(tmp);
+							});
+							console.log(array,'弹幕数组');
+							add_runner(array);
+					},
+					error:function () {
+					}
+				});
+				var COLOR_LIBRARY = {
+					'wish': [{ //祝福语的配色方案
+						background: 'rgba(255,206,0,.96)',
+						color: 'black',
+						name: 'black'
+					}, {
+						background: 'rgba(147,45,222,.96)',
+						color: 'white',
+						name: 'rgb(240,166,146)'
+					}]
+				}
+				var color_setting = function(type) { //获取配色方案
+					var length = COLOR_LIBRARY[type].length;
+					var idx = Math.random() * length >> 0;
+					return COLOR_LIBRARY[type][idx];
+				}
+
+				var control_per_number = function() { //控制屏幕占有率
+					document.querySelector('.screen_value').innerHTML = per_row_number;
+				}
+				////console.log('ddd');
+
+//				window.over_lock=false;
+//				document.querySelector('.danmu_container').addEventListener('mousemove', function(ev) {
+//					if($(ev.target).closest('.unit').length &&!window.over_lock) {
+//						window.over_lock=true;
+//						//这里放暂停代码，注意屏蔽this.innerText = '开始';这句代码
+//					} else if(!$(ev.target).closest('.unit').length &&window.over_lock){
+//						window.over_lock=false;
+//						//这里放开始代码，注意屏蔽this.innerText = '暂停';这句代码
+//					}
+//				})
+
+
+
+				document.getElementById('add_danmu').addEventListener('click',function(){
+					var val=document.getElementById('add_danmu_input').value,
+							num=parseInt(document.getElementById('add_danmu_num').value);
+					if(!val.length){
+						alert('请输入弹幕内容');
+						return false;
+					}
+					if(!num){
+						alert('请输入弹幕数量');
+						return false;
+					}
+
+					var arr=[];
+					for(var i=0;i<num;i++){
+						arr.push({
+							url: 'http://active.qiutianaimeili.com/	logo.png',
+							text: val,
+							type: 2,
+						});
+					}
+					add_runner(arr);
+//					//console.log('add runner');
+					document.getElementById('add_danmu_input').value='';
+
+
+				});
+
+				document.getElementById('control').addEventListener('click', function() {
+					if(!window.paused) {
+						window.paused_delay_funcs = []; //存放定时任务
+
+						this.innerText = '开始';
+						window.paused = true;
+						window.pausedTime = +new Date(); //暂停的时间
+						all_row_array.forEach(function(data, i) { //暂停赛道上没有满元的
+							for(var key in data.runner) {
+								var $current_runner = data.runner[key];
+								$current_runner.style.animationPlayState = 'paused';
+								$current_runner.style.webkitAnimationPlayState = 'paused';
+							}
+						});
+						for(var k1 in all_row_finish_runner_helper) {
+							for(var k2 in all_row_finish_runner_helper[k1]) {
+								var $current_runner = all_row_finish_runner_helper[k1][k2];
+								$current_runner.style.animationPlayState = 'paused';
+								$current_runner.style.webkitAnimationPlayState = 'paused';
+							}
+						}
+
+						for(var key in global_time_out) { //暂停，更新延迟时间
+							clearTimeout(key); //清除定时
+							var currentTime = +new Date();
+							global_time_out[key].delay = Math.max(0, global_time_out[key].delay - (window.pausedTime - global_time_out[key].currentTime));
+							global_time_out[key].currentTime = currentTime;
+						}
+					} else {
+						this.innerText = '暂停';
+						window.paused = false;
+						all_row_array.forEach(function(data, i) { //恢复赛道上没有满元的
+						for(var key in data.runner) {
+
+								var $current_runner = data.runner[key];
+								$current_runner.style.animationPlayState = 'running';
+								$current_runner.style.webkitAnimationPlayState = 'running';
+
+							}
+						});
+						for(var k1 in all_row_finish_runner_helper) {
+							for(var k2 in all_row_finish_runner_helper[k1]) {
+								var $current_runner = all_row_finish_runner_helper[k1][k2];
+								$current_runner.style.animationPlayState = 'running';
+								$current_runner.style.webkitAnimationPlayState = 'running';
+							}
+						}
+						//						////console.log('-----------');
+						var old_global_time_out = $.extend(true, {}, global_time_out);
+						global_time_out = {};
+						for(var key in old_global_time_out) { //暂停，更新延迟时间
+							var currentTime = +new Date();
+
+							(function(fun, delay, currentTime) {
+								var _timeout = setTimeout(function() {
+									delete global_time_out[_timeout];
+									fun();
+								}, delay);
+								global_time_out[_timeout] = {
+									fun: fun,
+									delay: delay,
+									currentTime: currentTime
+								}
+							})(old_global_time_out[key].fun, old_global_time_out[key].delay, currentTime);
+						}
+						old_global_time_out = null;
+						//释放定时任务
+						//						window.paused_delay_funcs.forEach(function(fun, i) {
+						//							(function() {
+						//								setTimeout(function() {
+						//									fun.fun();
+						//								}, fun.delay);
+						//							})(fun);
+						//
+						//						});
+
+					}
+				});
+
+				document.querySelector('.screen_value_select').addEventListener('change', function() {
+					//					//////console.log('c');
+					var selected_option = '';
+					Array.prototype.slice.call(document.querySelector('.screen_value_select').options).forEach(function(option, i) {
+							if(option.selected) {
+								selected_option = option.getAttribute('value');
+
+								per_row_number = +selected_option;
+								document.querySelector('.screen_value').innerHTML = per_row_number;
+							}
+						})
+						//					//////console.log(selected_option);
+
+				});
+
+				var allHeight = parseFloat(getComputedStyle(document.getElementsByClassName('danmu_container')[0]).height);
+				////////console.log(allHeight);
+				var STEP = 55;
+				//				var GLOBAL_MIN_NUMBER = 50; //最小出弹幕数量
+
+				var all_row_length = (allHeight / STEP) >> 0;
+				var per_row_number = 600; //每个跑道上赛跑者的数量
+
+				var global_row_length = all_row_length * per_row_number;
+
+				var fail_queue = []; //请求失败的队列
+
+				var global_time_out = {}; //全局定时
+
+				var all_row_array = []; //跑道数组,初始化跑道
+				var all_row_finish_helper = {}; //赛跑完成后的辅助map,比如你的赛道上人满了，all_row_array消失了，恢复的人不知道现在应该说赛道上多少个人
+				var all_row_finish_runner_helper = {};
+				var init_all_row_array = []; //初始化的跑道数组
+				for(var i = 0; i < all_row_length; i++) {
+					all_row_array[i] = {
+						name: i, //赛道的编号
+						runner: {}, //存放赛跑者对象，可以暂停
+						number: 0 //赛道上已经存在的选手的个数
+					}
+					init_all_row_array[i] = i;
+
+				}
+
+//				//console.log('kkkk',init_all_row_array);
+
+				////////console.log(all_row_array);
+
+				var array_map = {};
+				var runner_idx_array = []; //赛跑者的对应数组
+				var global_runner_idx_manage = 0; //所有的赛跑者idx分配中心
+				var global_wish_number = 0; //
+
+				var init_runner_for_data = function(array) { //通过数据声称runner
+					//					var $fragement = document.createDocumentFragment();
+					array.forEach(function(unit, i) {
+						global_wish_number++;
+
+						array_map[global_runner_idx_manage] = unit;
+						runner_idx_array.push(global_runner_idx_manage);
+						global_runner_idx_manage++;
+					});
+					document.querySelector('.all_number').innerHTML = global_wish_number;
+				}
+				init_runner_for_data([].concat(array)); //通过数据初始化runner
+
+				var add_runner=function(array){//增加赛跑者,[{....},....]
+					if(!Array.isArray(array)){
+						alert('请输入数组');
+						return false;
+					}
+					array.forEach(function(unit, i) {
+						global_wish_number++;
+
+						array_map[global_runner_idx_manage] = unit;
+						runner_idx_array.push(global_runner_idx_manage);
+						global_runner_idx_manage++;
+
+						//每增加一个，恢复一个失败的请求
+						if(fail_queue.length){
+							var fail_unit = fail_queue.shift();
+							if(fail_unit) { //如果不是空对象
+								row_runner(fail_unit.row_idx, fail_unit.aheadOption);
+								document.querySelector('.fail_queue').innerHTML = fail_queue.length;
+							}
+						}
+
+					});
+					document.querySelector('.all_number').innerHTML = global_wish_number;
+				}
+
+
+
+				//				//初始化宽度
+
+				var run_finish = function(ev) {
+					//					////////console.log('end');
+					var _$target = ev.target;
+					var runner_idx = _$target.getAttribute('runner_idx'),
+						row_idx = _$target.getAttribute('row_idx');
+					_$target.setAttribute('has_finish', 'true'); //表示已经完成了赛跑，现在处于等待状态
+
+					//					////////console.log(runner_idx, row_idx);
+
+					//					all_row_array.push(row_idx);
+					var temp_rows = all_row_array.filter(function(rowData, i) {
+						////////console.log(row_idx);
+						////////console.log(rowData);
+						if(rowData.name == row_idx) {
+							return rowData;
+						}
+					});
+					if(temp_rows.length) { //如果找到了跑道
+
+						temp_rows[0].number--; //赛场上的赛跑者少了一个
+						delete temp_rows[0].runner[runner_idx];
+						//						//////console.log(all_row_array);
+						//						//////console.log([].concat(temp_rows[0]))
+						//						//////console.log('--back---', row_idx, temp_rows[0].number,temp_rows[0].runner);
+					} else { //恢复被踢出的跑道
+
+						//						//////console.log('--kkk-')
+						all_row_array.push({
+							name: row_idx,
+							runner: all_row_finish_runner_helper[row_idx],
+							number: (all_row_finish_helper[row_idx] - 1) //获取per的临时存储变量
+						});
+						delete all_row_finish_runner_helper[row_idx];
+						//						//////console.log($.extend({}, all_row_finish_helper))
+						//						//////console.log('---back-ddd-', row_idx, (all_row_finish_helper[row_idx] - 1));
+					}
+					////////console.log('YYYYYYYYYYYY');
+					////////console.log(all_row_array);
+					all_finish_runner_count++;
+					document.querySelector('.screen_runner_all_number').innerHTML = all_runner_count - all_finish_runner_count;
+					if(all_runner_count - all_finish_runner_count > screen_runner_number_max) {
+						screen_runner_number_max = all_runner_count - all_finish_runner_count;
+						document.querySelector('.screen_runner_all_number_max').innerHTML = screen_runner_number_max;
+					}
+
+					_$target.className = 'unit';
+
+					_$target.style.transform = 'translate(0px, 0px)';
+					_$target.style.webkitTransform = 'translate(0px, 0px)';
+					runner_idx_array.push(runner_idx);
+					//如果有失败的请求，现在开始
+					var fail_unit = fail_queue.shift();
+					if(fail_unit) { //如果不是空对象
+						//						//////console.log('---process fail----', fail_unit.row_idx);
+						row_runner(fail_unit.row_idx, fail_unit.aheadOption);
+						//						//////console.log('*****now fail array*****');
+						//						//////console.log(fail_queue);
+						document.querySelector('.fail_queue').innerHTML = fail_queue.length;
+					}
+
+				}
+
+				var play_count = 0; //播放的次数
+				var all_runner_count = 0; //所有赛跑者上场的次数
+				var all_finish_runner_count = 0; //所有完成赛跑人的个数，用来计算屏幕上的赛跑者个数
+				var screen_runner_number_max = 0; //屏幕上赛跑者的出现的最大次数
+
+				var go_run = function(row_idx, $runner, aheadOption) { //aheadOption表示前面的人数据
+					//					////console.log('aaaaaaaaa');
+					//					if(window.paused) {
+					//						$runner.style.animationPlayState = 'paused';
+					//						$runner.style.webkitAnimationPlayState = 'paused';
+					//						//						paused_current_danmu.push($runner); //存放暂停瞬间没来得及暂停的弹幕
+					//						////console.log('aaaaaaa',aheadOption.stop_delay_time)
+					//						window.paused_delay_funcs.push({
+					//							fun: function() {
+					//								$runner.style.animationPlayState = 'running';
+					//								$runner.style.webkitAnimationPlayState = 'running';
+					//							},
+					//							delay: aheadOption.stop_delay_time
+					//						})
+					//					}
+
+					if(per_row_number < 20) { //低密集度分配模式
+						var delay = (1 / Math.sqrt(per_row_number)) * (.5 + ((play_count > 2) ? 1 : Math.min(Math.random(), 5.5)) * (Math.abs(Math.sin(row_idx)) * 2 + Math.random() * 60)) + 's';
+					} else { //高密度分配模式
+						var delay = '0s';
+					}
+					var runner_type = $runner.getAttribute('runner_type');
+					var text_length = $runner.getAttribute('length');
+					if(runner_type == 2) { //到场欢迎词
+						var _color_setting = color_setting('wish');
+						$runner.querySelector('.danmu_unit_img').style.borderColor = _color_setting.background;
+						$runner.querySelector('.danmu_unit_content').style.backgroundColor = _color_setting.background;
+						$runner.querySelector('.danmu_unit_content').style.color = _color_setting.color;
+						var duration = Math.floor(8 + Math.abs(Math.cos(row_idx)) * Math.max(text_length, 4) + Math.random() * Math.max(text_length * 1.5, 10)) + 's';
+						$runner.style.top = (8 + (row_idx % all_row_length) * STEP + (Math.sin(Math.random() * 50)) * 10) + 'px';
+					}
+					var width = parseFloat(window.getComputedStyle(document.getElementsByClassName('danmu_container')[0]).width);
+					var distance = parseFloat($runner.getAttribute('width'));
+					if(aheadOption.leafTime) { //在后面的人
+						////////console.log('GGGGGGGGGGGGGGG')
+						var realLeafTime = aheadOption.leafTime - parseFloat(delay);
+						////////console.log(realLeafTime)
+						if(realLeafTime > 0) { //有剩余 的时间
+							var maxSpeed = width / realLeafTime;
+							var maxDuration = (distance + width) / maxSpeed;
+							////////console.log('*************last***************');
+							////////console.log(parseFloat(duration), maxDuration);
+							////////console.log('**************end***************');
+							//							duration = maxDuration + 's';
+							duration = Math.max(parseFloat(duration), maxDuration) + 's';
+
+						}
+					}
+
+					if($runner.querySelector('.danmu_wish_img')) { //有灯笼
+						$runner.querySelector('.danmu_wish_img').style.animationDelay = Math.min(2, Math.max(.6, (18 / parseFloat(duration)) * .6));
+						$runner.querySelector('.danmu_wish_img').style.webkitAnimationDelay = Math.min(2, Math.max(.6, (18 / parseFloat(duration)) * .6));
+					}
+
+					$runner.style.animationDelay = delay;
+					$runner.style.webkitAnimationDelay = delay;
+					$runner.style.animationDuration = duration;
+					$runner.style.webkitAnimationDuration = duration;
+
+					var _className = 'unit danmu_unit ';
+
+					if(play_count == 0) {
+						_className += 'danmu_unit_half';
+					} else {
+						_className += 'danmu_unit_all';
+					}
+
+					$runner.setAttribute('class', _className);
+					$runner.setAttribute('row_idx', row_idx);
+
+					delay = parseFloat(delay);
+					duration = parseFloat(duration);
+
+					var speed = ((distance + width) / duration);
+
+					var shown_time = ((distance) / speed); //完全出现的时间
+
+					if(per_row_number < 20) { //低度分配
+						var next_delay = ((delay + shown_time + (duration - shown_time) / per_row_number) * 1000);
+						aheadOption.leafTime = (duration - shown_time - (duration - shown_time) / per_row_number); //剩下的时间
+					} else { //密集分配
+						var next_delay = ((delay + shown_time) * 1000);
+						aheadOption.leafTime = (duration - shown_time);
+					}
+
+					(function($runner, row_idx, next_delay, aheadOption) {
+						if(!window.paused) {
+							//						//////console.log('---paifa----', row_idx + '赛道任务')
+							var currentTime = +new Date();
+							var fun = function() {
+								row_runner(row_idx, aheadOption);
+							}
+
+							var _timeout = setTimeout(function() {
+								delete global_time_out[_timeout];
+								fun();
+							}, next_delay);
+
+							global_time_out[_timeout] = {
+								currentTime: currentTime,
+								delay: next_delay,
+								fun: fun
+							}
+						} else {
+
+						}
+
+						//					}
+					})($runner, row_idx, next_delay, $.extend({}, aheadOption));
+
+					//					}
+
+				}
+
+				var init_runner = function(global_runner_idx, unit, $replace) { //初始化赛跑者实例
+					if(!$replace) { //新建模式
+						var _$div = document.createElement('div');
+						_$div.setAttribute('class', 'unit');
+						_$div.setAttribute('has_finish', 'false'); //没有被初始化过的
+						_$div.setAttribute('runner_idx', global_runner_idx);
+						_$div.setAttribute('runner_type', unit.type);
+						_$div.setAttribute('length', unit.text.split('').length);
+
+						if(unit.type == 2) { //只是接受类型为2的
+							var _$div_tr = document.createElement('div');
+							var _$img_tr = document.createElement('div');
+							var _$div_context = document.createElement('div');
+							_$div_context.setAttribute('class', 'danmu_unit_content');
+							_$div_context.innerHTML = unit.text;
+							var _$img_div = document.createElement('div');
+							_$img_div.setAttribute('class', 'danmu_unit_img');
+							_$img_div.style.backgroundImage = 'url("' + unit.url + '")';
+							_$div_tr.appendChild(_$div_context);
+							_$img_tr.appendChild(_$img_div);
+							_$div.appendChild(_$img_tr);
+							_$div.appendChild(_$div_tr);
+						}
+						_$div.addEventListener('webkitAnimationEnd', function(ev) {
+							run_finish(ev);
+						});
+
+						//添加进去内容
+						document.getElementsByClassName('danmu_container')[0].appendChild(_$div);
+
+						//对刚加入没有初始化的runner添加后的初始化
+						//						document.querySelectorAll('.danmu_container >[has_init="false"]').forEach(function(node, i) {
+
+						if(_$div.nodeType == 1) {
+							var unit_width = 0; //单元宽度
+							unit_width += parseFloat(window.getComputedStyle(_$div).width);
+							_$div.setAttribute('width', unit_width);
+						}
+
+					} else { //重复使用模式
+						var _$div = $replace;
+						_$div.setAttribute('class', 'unit');
+						_$div.setAttribute('has_finish', 'false'); //没有被初始化过的
+						_$div.setAttribute('runner_idx', global_runner_idx);
+						_$div.setAttribute('runner_type', unit.type);
+						_$div.setAttribute('length', unit.text.split('').length);
+
+						if(unit.type == 2) { //只是接受2类型
+							var _$div_context = _$div.querySelector('.danmu_unit_content');
+							_$div_context.innerHTML = unit.text;
+							var _$img_div = _$div.querySelector('.danmu_unit_img');
+							_$img_div.style.backgroundImage = 'url("' + unit.url + '")';
+						}
+
+						//宽度必须重新计算
+						if(_$div.nodeType == 1) {
+							var unit_width = 0; //单元宽度
+							unit_width += parseFloat(window.getComputedStyle(_$div).width);
+							//						//////console.log(unit_width)
+
+							_$div.setAttribute('width', unit_width);
+						}
+
+					}
+					return {
+						idx: global_runner_idx,
+						obj: _$div
+					}
+
+				}
+				var get_runner = function() { //获取跑步者
+
+					//						//////console.log('get runner');
+					//						//////console.log([].concat(runner_idx_array));
+					var row_runner_length = runner_idx_array.length;
+					if(row_runner_length > 0) {
+						//							//////console.log('ok');
+						all_runner_count++;
+						play_count = all_runner_count / (global_row_length + 1) >> 0;
+						document.querySelector('.runner_all_number').innerHTML = all_runner_count;
+						document.querySelector('.screen_runner_all_number').innerHTML = all_runner_count - all_finish_runner_count;
+						if(all_runner_count - all_finish_runner_count > screen_runner_number_max) {
+							screen_runner_number_max = all_runner_count - all_finish_runner_count;
+							document.querySelector('.screen_runner_all_number_max').innerHTML = screen_runner_number_max;
+						}
+						var runner_idx = Math.random() * (row_runner_length) >> 0;
+						//							//////console.log('now',runner_idx);
+						var runner_data = array_map[runner_idx_array[runner_idx]];
+
+						var temp_data=runner_idx_array.splice(runner_idx, 1)[0];
+
+						var runner = init_runner(temp_data, runner_data, document.querySelector('.danmu_container >.unit[has_finish="true"][runner_type="' + runner_data.type + '"]'));
+						//							//////console.log('runner');
+						//							//////console.log(runner);
+
+						return runner;
+					} else {
+						return null;
+					}
+
+				}
+
+				var match_row_runner = function(row_idx, aheadOption) { //对跑道和赛跑者进行匹配赛跑
+					var row_data_idx = '';
+					//////console.log('BBB')
+					var row_datas = all_row_array.filter(function(row_data, i) {
+						if(row_data.name == row_idx) {
+							row_data_idx = i;
+							return row_data;
+						}
+					});
+					//////console.log('CCCCC');
+					//////console.log(row_datas)
+					if(row_datas && row_datas.length) { //找到row_idx对应的是哪个跑道
+						var row_data = row_datas[0];
+						//							//////console.log('CCCCCCC')
+						if(row_data && (row_data.number >= 0)) { //跑道上容纳的人数>0
+
+							var runner = get_runner();
+							if(runner) {
+
+								row_data.number++; //跑道上存在的赛跑者加一个
+								row_data.runner[runner.idx] = runner.obj;
+
+								//////console.log('---rend--', row_idx + '赛道', '已经容纳' + row_data.number + '人', 'ok');
+
+								//						////////console.log('row_idx=' + row_idx, 'runner_id=' + runner_idx);
+								//						////////console.log(runner);
+
+								if(row_data.number >= per_row_number) { //赛道上的人到了最大可容纳的个数
+									//////console.log('---full--', row_data_idx)
+									all_row_finish_helper[row_idx] = row_data.number; //相当于per_row_number的暂存旗
+									all_row_finish_runner_helper[row_idx] = $.extend(true, {}, row_data.runner); //复制runner_helper
+									all_row_array.splice(row_data_idx, 1);
+
+								}
+
+								////////console.log('RRRRRRRRRRRRRR');
+								////////console.log(all_row_array)
+
+								go_run(row_idx, runner.obj, aheadOption);
+							} else {
+//								//console.log('fail A');
+								//////console.log('---rend--', row_idx + '赛道', '已容纳' + row_data.number + '人', 'fail');
+								fail_queue.push({
+									row_idx: row_idx,
+									aheadOption: $.extend({}, aheadOption)
+								});
+								document.querySelector('.fail_queue').innerHTML = fail_queue.length;
+							}
+						}
+					} else {
+
+						//////console.log('执行任务失败');
+						//////console.log(row_idx);
+						//////console.log([].concat(all_row_array));
+						//console.log('fail B');
+						fail_queue.push({
+							row_idx: row_idx,
+							aheadOption: $.extend({}, aheadOption)
+						});
+						//							document.querySelector('.fail_queue').innerHTML = fail_queue.length;
+					}
+
+				}
+				var row_runner = function(row_idx, aheadOption) { //跑道上开始放入东西,这是向不同的赛道塞东西
+
+					if(row_idx == -1) { //初始化赛道，每个赛道上第一个领跑的人
+
+
+						if(init_all_row_array.length) {
+//							//console.log('abcd',init_all_row_array)
+							var _row_id = init_all_row_array[0];
+							//////console.log(_row_id);
+							match_row_runner(_row_id, aheadOption);
+							//////console.log('ddddd')
+							init_all_row_array.splice(0, 1); //将第一个删除
+							row_runner(-1, {});
+
+						}
+					} else { //后面的接力赛
+						match_row_runner(row_idx, aheadOption);
+					}
+
+				}
+
+				var begin_barrage = function() { //判断是否可以开始弹幕
+
+					control_per_number();
+
+					row_runner(-1, {});
+				}
+
+				begin_barrage();
+
+			})();
+		})();
+	</script>
+
+</html>

@@ -1,0 +1,467 @@
+body,
+html {
+	position: relative;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+.system_page {
+	position: absolute;
+	z-index: 100;
+	left: calc(5% - 30px);
+	width: 160px;
+	top: 5%;
+	bottom: 5%;
+	font-size: 12px;
+	color: white;
+	background: rgba(0, 0, 0, .5);
+	padding: 10px;
+}
+
+.system_page>div {
+	line-height: 25px;
+}
+
+.system_page>button {
+	margin: 4px 10px 0px 0px;
+}
+
+
+.danmu_container,
+.danmu_container_wrap {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	/*border: 1px solid black;*/
+	margin: auto;
+	z-index: 2;
+	background:rgb(250,250,250);
+}
+
+
+/*.danmu_container {
+	top: 10px;
+	bottom: -20px;
+}*/
+
+.danmu_container_wrap {
+	position: absolute;
+	z-index: 1;
+	/*background: white;*/
+	pointer-events: none;
+	/*width: 90%;*/
+	top: 5%;
+	bottom: 5%;
+	left: calc(5% + 160px);
+	/*width: 110px;*/
+	/*height: 80%;*/
+	right: 5%;
+	/*margin: 2%;*/
+	/*margin-top:10px;*/
+	overflow: hidden;
+}
+
+.danmu_unit_name {
+	padding: 0px 8px;
+	font-weight: bold;
+}
+
+.danmu_container>div.danmu_unit {
+	/*display: inline-table;*/
+	/*display: block;*/
+	/*top: 10px;*/
+	/*position: absolute;*/
+	/*white-space: pre;*/
+	/*left: 100%;*/
+	/*left: 100%;*/
+	left: 100%;
+	/*display: table;*/
+	transform: translate(0px, 0px);
+	-webkit-transform: translate(0px, 0px);
+}
+
+.danmu_unit_all {
+	animation: move 1s linear 5s;
+	-webkit-animation: move 1s linear 5s;
+}
+
+.danmu_unit_half {
+	animation: move_half 1s linear 5s;
+	-webkit-animation: move_half 1s linear 5s;
+}
+
+.danmu_container .unit {
+	position: absolute;
+	left: 200%;
+	display: table;
+}
+
+.danmu_container .unit>* {
+	display: table-cell;
+	position: relative;
+	vertical-align: middle;
+}
+
+.danmu_container .unit .danmu_unit_content {
+	white-space: pre;
+	font-family: 'SimSun'
+}
+
+
+/*到场提示语*/
+
+.danmu_container>div[runner_type='1'].unit .danmu_unit_content,
+.danmu_container>div[runner_type='2'].unit .danmu_unit_content {
+	font-size: 12px;
+	border-radius: 10px;
+	padding: 8px 6px;
+	margin-left: 2px;
+}
+
+.danmu_container>div[runner_type='2'].unit .danmu_unit_content {
+	color: #333;
+}
+
+
+/*系统祝福*/
+
+.danmu_container>div[runner_type='0'].unit .danmu_unit_content {
+	/*	border-top: 4px solid rgb(255, 251, 10);*/
+	position: relative;
+	padding: 6px 0px 0px 0px;
+	border-radius: 0px;
+	/*background:rgba(255,255,255,.5);*/
+	/*border-radius: 10px;*/
+}
+
+.danmu_container>div[runner_type='0'].unit .danmu_unit_content:after {
+	content: '';
+	position: absolute;
+	top: 0px;
+	right: 30px;
+	left: 30px;
+	border: 2px solid rgb(255, 251, 10);
+	border-radius: 10px;
+}
+
+.danmu_img_cown {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	/*border: 1px solid black;*/
+	background: url(../img/cown.png) no-repeat;
+}
+
+.danmu_img_cown_1 {
+	top: -30px;
+	height: 40px;
+	background-size: 200% auto;
+	background-position: 103% 110%;
+}
+
+.danmu_img_cown_2 {
+	top: -20px;
+	height: 40px;
+	background-size: 220% auto;
+}
+
+.danmu_img_cown_3 {
+	top: -26px;
+	height: 40px;
+	background-size: 200% auto;
+	background-position: 0% 110%;
+}
+
+.danmu_unit_img {
+	position: relative;
+	/*background: url('../img/head.jpg') no-repeat center center;*/
+	background-size: cover;
+	/*width: 60px;
+	height: 60px;*/
+	/* left: -85px; */
+	/*float: left;*/
+	/* top: 50%; */
+	/* transform: translate(0, -50%); */
+	border-radius: 50%;
+	border: 2px solid black;
+}
+
+.danmu_wish_img {
+	/*margin-left:-20px;*/
+	/*background: url('../img/wish.png') no-repeat center center;*/
+	background-size: contain;
+	margin-left: -15px;
+	margin-top: -20px;
+	transform-origin: top center;
+	position: relative;
+}
+
+.danmu_unit_img,
+.danmu_wish_img {
+	width: 30px;
+	height: 30px;
+}
+
+.denglong_container {
+	/*overflow: hidden;*/
+}
+
+@keyframes move_half {
+	0% {
+		transform: translate(0px, 0px);
+		-webkit-transform: translate(0px, 0px);
+		/*color: rgba(0, 0, 0, 1);*/
+	}
+	/*30% {
+				color: rgba(95, 145, 83, 1);
+			}
+			50% {
+				color: rgba(171, 75, 28, 1);
+			}
+			80% {
+				color: rgba(215, 25, 29, 1);
+				;
+			}*/
+	100% {
+		left: 0px;
+		/*color: rgba(0, 0, 0, 1);*/
+		transform: translate(-100%, 0px);
+		-webkit-transform: translate(-100%, 0px);
+	}
+}
+
+@-webkit-keyframes move_half {
+	0% {
+		transform: translate(0px, 0px);
+		-webkit-transform: translate(0px, 0px);
+		/*color: rgba(0, 0, 0, 1);*/
+	}
+	/*30% {
+				color: rgba(95, 145, 83, 1);
+			}
+			50% {
+				color: rgba(171, 75, 28, 1);
+			}
+			80% {
+				color: rgba(215, 25, 29, 1);
+				;
+			}*/
+	100% {
+		left: 0px;
+		/*color: rgba(0, 0, 0, 1);*/
+		transform: translate(-100%, 0px);
+		-wekbit-transform: translate(-100%, 0px);
+	}
+}
+
+@keyframes move {
+	0% {
+		left: 100%;
+		/*left: 100%;*/
+		transform: translate(0px, 0px);
+		-webkit-transform: translate(0px, 0px);
+		/*color: rgba(0, 0, 0, 1);*/
+	}
+	/*30% {
+				color: rgba(95, 145, 83, 1);
+			}
+			50% {
+				color: rgba(171, 75, 28, 1);
+			}
+			80% {
+				color: rgba(215, 25, 29, 1);
+				;
+			}*/
+	100% {
+		left: 0px;
+		/*color: rgba(0, 0, 0, 1);*/
+		transform: translate(-100%, 0px);
+		-webkit-transform: translate(-100%, 0px);
+	}
+}
+
+@-webkit-keyframes move {
+	0% {
+		left: 100%;
+		/*left: 100%;*/
+		transform: translate(0px, 0px);
+		-webkit-transform: translate(0px, 0px);
+		/*color: rgba(0, 0, 0, 1);*/
+	}
+	/*30% {
+				color: rgba(95, 145, 83, 1);
+			}
+			50% {
+				color: rgba(171, 75, 28, 1);
+			}
+			80% {
+				color: rgba(215, 25, 29, 1);
+				;
+			}*/
+	100% {
+		left: 0px;
+		/*color: rgba(0, 0, 0, 1);*/
+		transform: translate(-100%, 0px);
+		-wekbit-transform: translate(-100%, 0px);
+	}
+}
+
+@keyframes changeColor {
+	0% {
+		color: rgba(0, 0, 0, 1);
+	}
+	40% {
+		color: rgba(0, 0, 0, 1);
+	}
+	60% {
+		color: rgb(250, 237, 26);
+	}
+	100% {
+		color: rgb(250, 237, 26);
+	}
+}
+
+@-webkit-keyframes changeColor {
+	0% {
+		color: rgba(0, 0, 0, 1);
+	}
+	40% {
+		color: rgba(0, 0, 0, 1);
+	}
+	60% {
+		color: rgb(250, 237, 26);
+	}
+	100% {
+		color: rgb(250, 237, 26);
+	}
+}
+
+@keyframes changeColorBack {
+	0% {
+		color: rgb(250, 237, 26);
+	}
+	40% {
+		color: rgb(250, 237, 26);
+	}
+	60% {
+		color: rgba(0, 0, 0, 1);
+	}
+	100% {
+		color: rgba(0, 0, 0, 1);
+	}
+}
+
+@-webkit-keyframes changeColorBack {
+	0% {
+		color: rgb(250, 237, 26);
+	}
+	40% {
+		color: rgb(250, 237, 26);
+	}
+	60% {
+		color: rgba(0, 0, 0, 1);
+	}
+	100% {
+		color: rgba(0, 0, 0, 1);
+	}
+}
+
+@keyframes denglongRotate {
+	0% {
+		transform: rotate(-60deg);
+	}
+	/*80% {
+		transform: rotate(0deg);
+	}*/
+	100% {
+		transform: rotate(-5deg);
+	}
+}
+
+@-webkit-keyframes denglongRotate {
+	0% {
+		transform: rotate(-60deg);
+	}
+	/*80% {
+		transform: rotate(0deg);
+	}*/
+	100% {
+		transform: rotate(-5deg);
+		transform: rotate(-5deg);
+	}
+}
+
+.denglong {
+	position: relative;
+	width: 80px;
+	display: inline-block;
+	height: 80px;
+	line-height: 64px;
+	font-size: 26px;
+	font-weight: bold;
+	text-align: center;
+	background: url('../img/denglong.png') no-repeat center center;
+	background-size: contain;
+	color: rgb(255, 251, 10);
+	/*animation: changeColor 2s linear 0s infinite alternate;
+	-webkit-animation: changeColor 2s linear 0s infinite alternate;*/
+}
+
+.denglong:after {
+	content: '';
+	position: absolute;
+	top: -6px;
+	left: 50%;
+	height: 6px;
+	transform: translate(-50%, 0px);
+	border: 2px solid rgb(255, 251, 10);
+}
+
+
+/*.denglong_container>.denglong:nth-child(odd) {
+	color: rgba(0, 0, 0, 1);
+	animation: changeColor 2s linear 0s infinite alternate;
+	-webkit-animation: changeColor 2s linear 0s infinite alternate;
+}
+
+.denglong_container>.denglong:nth-child(even) {
+	color: rgb(250, 237, 26);
+	animation: changeColorBack 2s linear 0s infinite alternate;
+	-webkit-animation: changeColorBack 2s linear 0s infinite alternate;
+}*/
+
+select {
+	color: white;
+}
+
+@media (max-width: 540px) {
+	.system_page {
+		position: absolute;
+		z-index: 100;
+		left: 10px;
+		width: auto;
+		top: auto;
+		right: 10px;
+		height: 200px;
+		bottom: 10px;
+		font-size: 12px;
+		color: white;
+		background: rgba(0, 0, 0, .5);
+		padding: 10px;
+	}
+	.danmu_container_wrap {
+		position: absolute;
+		z-index: 1;
+
+		pointer-events: none;
+		top: 10px;
+		bottom: 240px;
+		left:10px;
+		right: 10px;
+		overflow: hidden;
+		
+	}
+}
