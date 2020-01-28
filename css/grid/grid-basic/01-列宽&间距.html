@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>CSS Grid</title>
+   <style>
+      /* 2. 设置基本样式 */
+      * {
+         padding: 0;
+         margin: 0;
+      }
+      .wrapper>div {
+         background-color: #eee;
+         padding: 1rem;
+      }
+
+      .wrapper>div:nth-child(odd) {
+         background-color: #ddd;
+      }
+
+      /* 3. 设置 wrapper 为grid，发现没变化 */
+      .wrapper {
+         display: grid;
+         /* 3.1 设置列宽属性，看效果变两栏 */
+         grid-template-columns: 70% 30%;
+         /* 5 修改 列宽 为三栏 */
+         grid-template-columns: 40% 30% 30%;
+         /* 6. 重置为 两列效果，并设置gap */
+         grid-template-columns: 70% 30%;
+         grid-column-gap: 1rem;
+         grid-row-gap: 2rem;
+         /* 7. gap简写形式 */
+         grid-gap: 1rem;
+         grid-gap: 2rem 1rem;
+      }
+   </style>
+</head>
+
+<body>
+   <div class="wrapper">
+      <!-- 1. 设置两个div -->
+      <div>
+         Lorem ipsum dolor sit amet consectetur adipisicing elit. Id quisquam nam praesentium accusamus. Praesentium
+         ducimus assumenda qui adipisci suscipit labore velit iusto totam nam, rerum asperiores porro iste molestias a!
+         Delectus nisi reprehenderit dignissimos, quibusdam sequi earum dolorum autem molestias!
+      </div>
+      <div>
+         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit in odit maxime consequatur autem accusantium
+         alias asperiores, delectus ipsum nesciunt!
+      </div>
+
+      <!-- 4. 再复制两个div看两列展示效果 -->
+      <div>
+         Lorem ipsum dolor sit amet consectetur adipisicing elit. Id quisquam nam praesentium accusamus. Praesentium
+         ducimus assumenda qui adipisci suscipit labore velit iusto totam nam, rerum asperiores porro iste molestias a!
+         Delectus nisi reprehenderit dignissimos, quibusdam sequi earum dolorum autem molestias!
+      </div>
+      <div>
+         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit in odit maxime consequatur autem accusantium
+         alias asperiores, delectus ipsum nesciunt!
+      </div>
+      <!-- 5.1 再加个div显示hello（3列下自增div效果） -->
+      <div>Hello</div>
+   </div>
+</body>
+
+</html>

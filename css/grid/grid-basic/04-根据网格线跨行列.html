@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>CSS Grid</title>
+   <style>
+      /* 1. 从03复制页面内容，保留如下样式，删除单独box中的对齐属性样式 */
+      * {
+         padding: 0;
+         margin: 0;
+      }
+
+      .wrapper>div {
+         background-color: #eee;
+         padding: 1rem;
+         border: 1px solid #333;
+      }
+
+      .wrapper>div:nth-child(odd) {
+         background-color: #ddd;
+      }
+
+      .wrapper {
+         display: grid;
+         grid-template-columns: 1fr 2fr 1fr;
+         grid-auto-rows: minmax(100px, auto);
+         grid-gap: 1rem;
+         justify-items: start;
+         justify-items: end;
+         justify-items: center;
+         justify-items: stretch;/*默认值*/
+         align-items: start;
+         align-items: end;
+         align-items: center;
+         align-items: stretch;
+      }
+
+      /* 2. 设置跨行列 */
+      .box1 {
+         /* 2.1 设置第一个box跨列，第一根竖线到第三根竖线 */
+         grid-column: 1 / 3;
+         /* 2.2 通过 span 的方式设置，效果与上面相同 */
+         grid-column: 1 / span 2;
+         /* 2.3 设置跨行 */
+         grid-row: 1 / 3;
+      }
+
+      .box2 {
+         /* 3. 设置box2跨行列 */
+         grid-column: 3;
+         grid-row: 1 / 3;
+      }
+
+      .box3 {
+         /* 4. 设置box3跨行列 */
+         grid-column: 2 / 4;
+         grid-row: 3;
+      }
+
+      .box4 {
+         /* 5. 设置box4跨行列 */
+         grid-column: 1;
+         grid-row: 2 / 4;
+      }
+   </style>
+</head>
+
+<body>
+   <div class="wrapper">
+      <!-- .box.box${Box $}*4 -->
+      <div class="box box1">Box 1</div>
+      <div class="box box2">Box 2</div>
+      <div class="box box3">Box 3</div>
+      <div class="box box4">Box 4</div>
+   </div>
+</body>
+
+</html>

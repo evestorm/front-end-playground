@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>CSS Grid</title>
+   <style>
+      /* 2. 设置基本样式看效果 */
+      * {
+         padding: 0;
+         margin: 0;
+      }
+
+      .wrapper>div {
+         background-color: #eee;
+         padding: 1rem;
+      }
+
+      .wrapper>div:nth-child(odd) {
+         background-color: #ddd;
+      }
+
+      /* 3. 设置 wrapper 为grid */
+      .wrapper {
+         display: grid;
+         /* 3.1 设置列宽为平均的三份 fractions（份数），保存后看效果 */
+         grid-template-columns: 1fr 1fr 1fr;
+         /* 3.2 再把第二列设置为2fr看效果 */
+         grid-template-columns: 1fr 2fr 1fr;
+         /* 4. 通过 repeat 函数简化编码，第一个参数为重复次数，后面的为重复的值 */
+         grid-template-columns: repeat(3, 1fr);
+         /* 4.1 还可以设置多个重复 */
+         grid-template-columns: repeat(3, 2fr 1fr);
+         /* 4.2 顺便设置下gap间距 */
+         grid-gap: 1rem;
+         /* 4.3 重置列宽 */
+         grid-template-columns: repeat(3, 1fr);
+         /* 5. 设置行高 */
+         grid-auto-rows: 100px;
+         /* 5.2 通过 minmax 设置最小最大值 */
+         grid-auto-rows: minmax(100px, auto);
+      }
+      /* 6.1 设置嵌套div样式 */
+      .nested {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         grid-gap: 1rem;
+         grid-auto-rows: 70px;
+      }
+      .nested>div {
+         border: 1px solid #333;
+         padding: 1rem;
+      }
+   </style>
+</head>
+
+<body>
+   <!-- 1. 设置基本内容 -->
+   <div class="wrapper">
+      <div>Lorem ipsum dolor sit amet.</div>
+      <!-- 5.1 设置更多内容，会发现内容溢出 -->
+      <!-- <div>Lorem ipsum dolor sit amet.</div> -->
+      <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur tenetur libero similique ex porro numquam suscipit praesentium saepe aspernatur, nihil fugiat repellendus provident harum excepturi, assumenda velit quasi, facilis hic ad. Accusantium error laborum possimus unde quibusdam beatae, quasi atque.</div>
+      <!-- 6 演示grid布局嵌套 -->
+      <!-- <div>Lorem ipsum dolor sit amet.</div> -->
+      <div>
+         <div class="nested">
+            <div>Lorem</div>
+            <div>Lorem</div>
+            <div>Lorem</div>
+            <!-- 6.2 无论怎么添加，都会自动向后排列 -->
+            <div>Lorem</div>
+            <div>Lorem</div>
+            <div>Lorem</div>
+         </div>
+      </div>
+      <div>Lorem ipsum dolor sit amet.</div>
+      <div>Lorem ipsum dolor sit amet.</div>
+      <div>Lorem ipsum dolor sit amet.</div>
+      <div>Lorem ipsum dolor sit amet.</div>
+      <div>Lorem ipsum dolor sit amet.</div>
+   </div>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>CSS Grid</title>
+   <style>
+      /* 1. 从02复制页面内容，保留如下样式 */
+      * {
+         padding: 0;
+         margin: 0;
+      }
+
+      .wrapper>div {
+         background-color: #eee;
+         padding: 1rem;
+         /* 1.1额外添加div边框 */
+         border: 1px solid #333;
+      }
+
+      .wrapper>div:nth-child(odd) {
+         background-color: #ddd;
+      }
+
+      /* 3. 设置 wrapper 为grid */
+      .wrapper {
+         display: grid;
+         /* 3.1 设置grid基本布局，看样式 */
+         grid-template-columns: 1fr 2fr 1fr;
+         grid-auto-rows: minmax(100px, auto);
+         grid-gap: 1rem;
+         /* 4. 设置每个box横向对齐方式 */
+         justify-items: start;
+         justify-items: end;
+         justify-items: center;
+         justify-items: stretch; /*默认值*/
+         /* 5. 设置每个box纵向对齐方式 */
+         align-items: start;
+         align-items: end;
+         align-items: center;
+         align-items: stretch;
+      }
+      /* 6. 设置每个单独box的纵向对齐方式 */
+      .box1 {
+         align-self: start;
+      }
+      .box2 {
+         align-self: end;
+      }
+      .box3 {
+         align-self: center;
+      }
+      /* 7. 设置每个单独box的横向对象方式 */
+      .box4 {
+         justify-self: end;
+      }
+   </style>
+</head>
+
+<body>
+   <div class="wrapper">
+      <!-- 2. 根据下面快捷方式创建box盒子 -->
+      <!-- .box.box${Box $}*4 -->
+      <div class="box box1">Box 1</div>
+      <div class="box box2">Box 2</div>
+      <div class="box box3">Box 3</div>
+      <div class="box box4">Box 4</div>
+   </div>
+</body>
+
+</html>
