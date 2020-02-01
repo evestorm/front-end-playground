@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import create from "@/utils/create";
+
+Vue.prototype.$create = create;
+
 import { Form, FormItem, Input, Select, Option, Col, DatePicker, TimePicker, Switch, CheckboxGroup, Checkbox, RadioGroup, Radio, Button } from "element-ui";
 
 Vue.config.productionTip = false

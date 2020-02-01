@@ -22,13 +22,13 @@
    import SwFormItem from "./SwFormItem";
    import SwInput from "./SwInput";
 
-   // import Notice from "@/components/notice/KNotice";
+   import SwNotice from "@/components/notice/SwNotice";
 
    export default {
       components: {
          SwForm,
          SwFormItem,
-         SwInput
+         SwInput,
       },
       data() {
          return {
@@ -51,13 +51,13 @@
       methods: {
          submitForm(form) {
             this.$refs[form].validate(valid => {
-               alert(valid ? '请求登录!' : '校验失败');
-               // const notice = this.$create(Notice, {
-               //    title: "社会你杨哥喊你来搬砖",
-               //    message: valid ? "请求登录!" : "校验失败!",
-               //    duration: 1000
-               // });
-               // notice.show();
+               // alert(valid ? '请求登录!' : '校验失败');
+               const notice = this.$create(SwNotice, {
+                  title: "提示",
+                  message: valid ? "校验成功!" : "校验失败!",
+                  duration: 1000
+               });
+               notice.show();
             });
          }
       }
