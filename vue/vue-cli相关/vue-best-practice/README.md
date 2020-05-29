@@ -233,3 +233,16 @@ Vue.component('svg-icon', SvgIcon)
 </template>
 ```
 
+```js
+//  TODO 需要确认怎么发送,发送什么
+if (cw.isApp(true)) {
+  const webpageurl = "https://mp.weixin.qq.com";
+  const pagePath = `/pages/shopSearchSub/banquetDetail/banquetDetail?banquetId=f8336ad5-f56d-438a-be0b-08d79e3bca79`;
+  let title = '档案填写';
+  let desc = '王元元邀请您完善您的档案资料';
+  const imgUrl = 'https://pic.cwyyt.cn/upload/img/20200211/1130373037_invitePic.png';
+  const int = 0;
+
+  YYT.SendMiniPrograme(webpageurl, pagePath, title, desc, imgUrl, int);
+}
+```
