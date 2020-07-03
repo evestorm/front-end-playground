@@ -27,7 +27,7 @@ export default {
     },
     //缓冲区比例
     bufferScale:{
-      type:Number, 
+      type:Number,
       default:1
     },
     //容器高度 100px or 50vh
@@ -71,11 +71,12 @@ export default {
   },
   updated(){
     this.$nextTick(function () {
+      console.log(this.$refs.items);
       if(!this.$refs.items || !this.$refs.items.length){
         return ;
       }
       //获取真实元素大小，修改对应的尺寸缓存
-      this.updateItemsSize(); 
+      this.updateItemsSize();
       //更新列表总高度
       let height = this.positions[this.positions.length - 1].bottom;
       this.$refs.phantom.style.height = height + 'px'
@@ -147,7 +148,7 @@ export default {
             this.positions[k].bottom = this.positions[k].bottom - dValue;
           }
         }
-        
+
       })
     },
     //获取当前的偏移量
